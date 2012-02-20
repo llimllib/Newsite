@@ -83,13 +83,13 @@ def build():
     most_recent.sort(reverse=True)
 
     #output RSS
-    rss_output = render(open(join("template", "rss.mustache")).read(), {
+    rss_output = render(open(t("rss.mustache")).read(), {
         "items": [data for date, data in most_recent[:5]]
     })
     open("build/Rss", "w").write(rss_output)
     
     #output atom
-    atom_output = render(open(join("template", "atom.mustache")).read(), {
+    atom_output = render(open(t("atom.mustache")).read(), {
         "items": [data for date, data in most_recent[:5]],
         "most_recent_update": most_recent[0][1]["isodate"]
     })
