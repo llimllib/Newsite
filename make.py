@@ -4,7 +4,7 @@ import sys
 
 from os import mkdir, unlink, stat
 from glob import glob
-from time import strptime, strftime, mktime, localtime, gmtime
+from time import strftime, mktime
 from shutil import copy, rmtree
 from codecs import open
 from os.path import join, isdir, isfile, basename
@@ -12,7 +12,7 @@ from datetime import datetime
 
 from pystache import render
 
-from lib.utils import copy_tree
+from lib.utils import copy_tree, parse_bloxsom
 
 def clean():
     if isdir("build"):
@@ -35,25 +35,7 @@ def build():
 
     most_recent = []
     for f in glob("blog_entries/*.txt"):
-        lines = open(f, encoding="utf8").readlines()
-
-        #the first line is the title
-        title = lines.pop(0).strip()
-
-        #read metadata
-        meta = {}
-        while lines[0].startswith("#"):
-            k, v = lines.pop(0).strip("#\n").split(" ", 1)
-            meta[k] = v
-            
-        txt = "".join(lines)
-
-        #TODO: pygmentize code snippets
-
-        if 'time' in meta:
-            time_tuple = strptime(meta['time'], "%m-%d-%y %H:%M")
-        else:
-            time_tuple = localtime(stat(f)[8])
+        title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
 
         timestr = strftime('%b %d, %Y', time_tuple)
 
