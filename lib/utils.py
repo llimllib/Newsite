@@ -62,6 +62,7 @@ def parse_bloxsom(openfilehandle):
         meta[k] = v
         
     txt = "".join(lines)
+    txt = highlight_code(txt, True)
 
     #TODO: pygmentize code snippets
 
@@ -71,3 +72,25 @@ def parse_bloxsom(openfilehandle):
         time_tuple = localtime(stat(f)[8])
 
     return title, meta, time_tuple, txt
+
+import re
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+from pygments.util import ClassNotFound
+
+CODE_RE = re.compile("<code (?:\s*lang=(.*?))*>(.*?)<(?#)/code>", re.S)
+
+def highlight_code(textstr, font_tags=False):
+    for lang, code in CODE_RE.findall(textstr):
+        if not lang: lang = "python"
+
+        try:
+            lexer = get_lexer_by_name(lang.strip('"'))
+        except ClassNotFound:
+            return
+        formatter = HtmlFormatter(style="friendly", noclasses=font_tags)
+        code = highlight(code, lexer, formatter)
+
+        textstr = CODE_RE.sub(code, textstr, 1)
+    return textstr
