@@ -53,10 +53,10 @@ def build():
 
         timestr = strftime('%b %d, %Y', time_tuple)
 
-        output_filename = join("build", basename(f).replace("txt", "html"))
+        newname = basename(f).replace("txt", "html")
+        output_filename = join("build", newname)
 
-        datelink = '<a href="http://billmill.org/%s">%s</a>' % (
-            output_filename, timestr)
+        datelink = '<a href="http://billmill.org/%s">%s</a>' % (newname, timestr)
 
         output = render(blog_template, {
             "title": title,
