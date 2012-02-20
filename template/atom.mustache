@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+      xmlns:thr='http://purl.org/syndication/thread/1.0'
+      xml:base='http://billmill.org/Atom'
+      xml:lang='en-us'>
+ <title>Bill Mill</title>
+ <link rel='hub' href='http://pubsubhubbub.appspot.com/' />
+ <id>http://billmill.org</id>
+ <link href='./' />
+ <link rel='self' href='' />
+ <icon>/favicon.ico</icon>
+ <updated>{{ most_recent_update }}</updated>
+ <author><name>Bill Mill</name></author>
+
+{{#items}}
+    <entry xml:base='{{ relative_url }}'>
+     <title>{{ title }}</title>
+     <id>{{ url }}</id>
+     <published>{{ isodate }}</published>
+     <updated>{{ isodate }}</updated>
+     <summary type='xhtml'>{{ summary }}</summary>
+    <content type='xhtml'>{{ summary }}</content></entry>
+{{/items}}
+
+</feed>

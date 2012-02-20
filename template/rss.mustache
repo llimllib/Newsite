@@ -1,0 +1,17 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+<channel>
+    <title>Bill Mill</title>
+    <link>http://www.billmill.org/</link>
+    <description/>
+    {{#items}}
+        <item>
+        <title>{{ title }}</title>
+        <link>{{ url }}</link>
+        <guid isPermaLink="true">{{ url }}</guid>
+        <pubDate>{{ rfc822date }}</pubDate>
+        <description>{{ summary }}</description>
+        <media:title>{{ title }}</media:title>
+        </item>
+    {{/items}}
+</channel>
+</rss>
