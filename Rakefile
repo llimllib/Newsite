@@ -1,5 +1,12 @@
 TEMPLATES = FileList["template/**/*"]
 
-task :build => [TEMPLATES] do
-  
+task :clean do
+  if File.directory? "build"
+    rmdir "build"
+  end
+end
+
+task :build => [:clean] do
+  directory "build"
+  cp_r Dir["template/*"], "build/"
 end
