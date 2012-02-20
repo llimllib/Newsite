@@ -2,8 +2,9 @@
 
 import sys
 
-from os import mkdir, unlink
+from os import mkdir, unlink, stat
 from glob import glob
+from time import strptime, strftime, mktime, localtime
 from shutil import copy, rmtree
 from codecs import open
 from os.path import join, isdir, isfile, basename
@@ -45,19 +46,23 @@ def build():
             
         txt = "".join(lines)
 
-        ### TODO
-        datelink = ""
+        if 'time' in meta:
+            time_tuple = strptime(meta['time'], "%m-%d-%y %H:%M")
+        else:
+            time_tuple = localtime(stat(f)[8])
+
+        timestr = strftime('%b %d, %Y', time_tuple)
+
+        output_filename = join("build", basename(f).replace("txt", "html"))
+
+        datelink = '<a href="http://billmill.org/%s">%s</a>' % (
+            output_filename, timestr)
 
         output = render(blog_template, {
             "title": title,
             "content": txt,
             "datelink": datelink
         })
-
-        output_filename = join("build", basename(f).replace("txt", "html"))
-
-        if "i18" in output_filename:
-            import pdb; pdb.set_trace()
 
         open(output_filename, "w", "utf8").write(output)
 
