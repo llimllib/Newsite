@@ -95,19 +95,13 @@ def build():
     })
     open("build/Atom", "w").write(rss_output)
 
-def install():
-    pass
-
 if __name__ == "__main__":
     if sys.argv[-1] == "clean":
         clean()
     elif sys.argv[-1] == "build":
         build()
-    elif sys.argv[-1] == "install":
-        install()
     elif sys.argv[-1] == "pull":
         pull()
     else:
         clean()
         build()
-        install()
