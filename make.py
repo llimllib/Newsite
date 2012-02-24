@@ -31,7 +31,7 @@ def build():
     
     copy(t("index.html"), "build/")
 
-    blog_template = open(t("blog_entry.mustache")).read()
+    blog_template = open(t("blog_entry.mustache"), encoding="utf8").read()
 
     most_recent = []
     for f in glob("blog_entries/*.txt"):
