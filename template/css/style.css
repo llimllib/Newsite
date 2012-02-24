@@ -54,3 +54,14 @@ p {
 .mainboxes {
     margin-top: 40px;
 }
+
+.footer {
+    color: #777;
+    text-align: center;
+    margin-bottom: 20px;
+    font:  12px Georgia,'Times New Roman',serif underline;
+}
+
+.footer a, .footer a:visited {
+    color: #777;
+}
