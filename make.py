@@ -2,7 +2,7 @@
 
 import sys
 
-from os import mkdir, unlink, stat
+from os import mkdir, unlink, stat, system
 from glob import glob
 from time import strftime, mktime
 from shutil import copy, rmtree
@@ -77,6 +77,11 @@ def build():
     })
     open("build/Atom", "w").write(rss_output)
 
+def deploy():
+    system("""
+rsync -avuz -e ssh --safe-links --exclude ".git" \
+build/* llimllib@billmill.org:~/public_html/""")
+
 if __name__ == "__main__":
     if sys.argv[-1] == "clean":
         clean()
@@ -87,3 +92,4 @@ if __name__ == "__main__":
     else:
         clean()
         build()
+        deploy()
