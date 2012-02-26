@@ -30,6 +30,7 @@ def build():
         copy_tree(t(dir_), join("build", dir_))
     
     copy(t("index.html"), "build/")
+    copy(t("favicon.ico"), "build/")
 
     blog_template = open(t("blog_entry.mustache"), encoding="utf8").read()
 
