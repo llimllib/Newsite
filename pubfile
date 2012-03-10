@@ -1,0 +1,82 @@
+from pub import task
+from glob import glob
+from time import strftime
+from codecs import open
+from os.path import join, basename, isfile, isdir
+from pystache import render
+from functools import partial
+from pub.shortcuts import rm, mkdir, rsync, newer
+
+from lib.utils import parse_bloxsom
+
+@task
+def clean():
+    """Remove the build dir"""
+    rm("-rf build")
+
+def relative_url(f):
+    return basename(f).replace("txt", "html")
+
+def outname(f):
+    return join("build", relative_url(f))
+
+def render_blog(f):
+    print "rendering: ", f
+
+    title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
+
+    timestr = strftime('%b %d, %Y', time_tuple)
+
+    blog_template = open(join("template", "blog_entry.mustache"), encoding="utf8").read()
+
+    url = "http://billmill.org/%s" % relative_url(f)
+    datelink = '<a href="%s">%s</a>' % (url, timestr)
+
+    output = render(blog_template, {
+        "title": title,
+        "content": txt,
+        "datelink": datelink
+    })
+
+    open(outname(f), "w", "utf8").write(output)
+
+@task
+def make_build():
+    if not isdir('build'): mkdir('build')
+
+def needed(f1, f2):
+    return not isfile(f2) or newer(f1, f2)
+
+@task("make_build")
+def blog_entries():
+    for f in glob("blog_entries/*.txt"):
+        if needed(f, outname(f)):
+            render_blog(f)
+
+def regenerate_all():
+    for f in glob("blog_entries/*.txt"): render_blog(f)
+
+@task("make_build")
+def blog_template():
+    """If any html file is older than the current template, regenerate all blogs"""
+    for f in glob("build/*.html"):
+        if newer(join("template", "blog_entry.mustache"), f):
+            regenerate_all()
+            break
+
+@task("blog_entries", "blog_template")
+def build():
+    t = partial(join, "template")
+    b = partial(join, "build")
+
+    #sync static files
+    rsync("-avuz %s %s" % (t("css"),         b("css")))
+    rsync("-avuz %s %s" % (t("images"),      b("images")))
+    rsync("-avuz %s %s" % (t("index.html"),  b("index.html")))
+    rsync("-avuz %s %s" % (t("favicon.ico"), b("favicon.ico")))
+
+@task
+def deploy():
+    """deploy the site"""
+    rsync("-avuz -e ssh --safe-links --exclude '.git' build/* "
+          "llimllib@billmill.org:~/public_html/")
