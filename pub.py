@@ -1,4 +1,4 @@
-from pub import task
+from pub import task, file_rule
 from glob import glob
 from time import strftime
 from codecs import open
@@ -20,7 +20,12 @@ def relative_url(f):
 def outname(f):
     return join("build", relative_url(f))
 
-def render_blog(f):
+@task(private=True)
+def make_build():
+    if not isdir('build'): mkdir('build')
+
+@file_rule("blog_entries/*.txt", outname)
+def blog_entry(f):
     print "rendering: ", f
 
     title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
@@ -40,23 +45,10 @@ def render_blog(f):
 
     open(outname(f), "w", "utf8").write(output)
 
-@task
-def make_build():
-    if not isdir('build'): mkdir('build')
-
-def needed(f1, f2):
-    return not isfile(f2) or newer(f1, f2)
-
-@task("make_build")
-def blog_entries():
-    for f in glob("blog_entries/*.txt"):
-        if needed(f, outname(f)):
-            render_blog(f)
-
 def regenerate_all():
     for f in glob("blog_entries/*.txt"): render_blog(f)
 
-@task("make_build")
+@task("make_build", private=True)
 def blog_template():
     """If any html file is older than the current template, regenerate all blogs"""
     for f in glob("build/*.html"):
@@ -64,7 +56,7 @@ def blog_template():
             regenerate_all()
             break
 
-@task("blog_entries", "blog_template")
+@task("blog_entry", "blog_template")
 def build():
     t = partial(join, "template")
     b = partial(join, "build")
