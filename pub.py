@@ -46,7 +46,7 @@ def blog_entry(f):
     open(outname(f), "w", "utf8").write(output)
 
 def regenerate_all():
-    for f in glob("blog_entries/*.txt"): render_blog(f)
+    for f in glob("blog_entries/*.txt"): blog_entry(f)
 
 @task("make_build", private=True)
 def blog_template():
@@ -56,16 +56,16 @@ def blog_template():
             regenerate_all()
             break
 
-@task("blog_entry", "blog_template")
+@task("make_build", "blog_entry", "blog_template")
 def build():
     t = partial(join, "template")
     b = partial(join, "build")
 
     #sync static files
-    rsync("-avuz %s %s" % (t("css"),         b("css")))
-    rsync("-avuz %s %s" % (t("images"),      b("images")))
-    rsync("-avuz %s %s" % (t("index.html"),  b("index.html")))
-    rsync("-avuz %s %s" % (t("favicon.ico"), b("favicon.ico")))
+    rsync("-vuz %s %s" % (t("css"),         b("css")))
+    rsync("-vuz %s %s" % (t("images"),      b("images")))
+    rsync("-vuz %s %s" % (t("index.html"),  b("index.html")))
+    rsync("-vuz %s %s" % (t("favicon.ico"), b("favicon.ico")))
 
 @task
 def deploy():
