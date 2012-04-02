@@ -1,7 +1,17 @@
-import os
+import os, shutil
 from time import strptime, localtime
 from distutils.file_util import copy_file, DistutilsFileError
 from distutils.dir_util import mkpath
+
+STAT_CACHE = {}
+
+def cache(f):
+    """Return the cached stat if it exists, otherwise, re-stat the file
+
+    Use this instead of calling stat manually, to avoid extra file stats.
+
+    Assumes files never change."""
+    return STAT_CACHE.get(f, os.stat(f))
 
 def copy_tree(src, dst, ignores=()):
     """Copy an entire directory tree 'src' to a new location 'dst'.
@@ -69,7 +79,7 @@ def parse_bloxsom(openfilehandle):
     if 'time' in meta:
         time_tuple = strptime(meta['time'], "%m-%d-%y %H:%M")
     else:
-        time_tuple = localtime(stat(f)[8])
+        time_tuple = localtime(cache(f).st_mtime)
 
     return title, meta, time_tuple, txt
 
