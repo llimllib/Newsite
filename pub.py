@@ -62,8 +62,8 @@ def build():
     b = partial(join, "build")
 
     #sync static files
-    rsync("-avuz %s %s" % (t("css"),         b("css")))
-    rsync("-avuz %s %s" % (t("images"),      b("images")))
+    rsync("-avuz %s %s" % (t("css/"),        b("css/")))
+    rsync("-avuz %s %s" % (t("images/"),     b("images/")))
     rsync("-avuz %s %s" % (t("index.html"),  b("index.html")))
     rsync("-avuz %s %s" % (t("favicon.ico"), b("favicon.ico")))
 
