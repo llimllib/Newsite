@@ -71,7 +71,7 @@ def build():
 @task
 def deploy():
     """deploy the site"""
-    rsync("-avuz -e ssh --safe-links --exclude '.git' build/ "
+    rsync("-az --delete -e ssh --safe-links --exclude '.git' build/ "
           "../llimllib.github.com/")
     cd("../llimllib.github.com")
     git("add .")
