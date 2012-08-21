@@ -62,10 +62,11 @@ def build():
     b = partial(join, "build")
 
     #sync static files
-    rsync("-avuz %s %s" % (t("css/"),        b("css/")))
-    rsync("-avuz %s %s" % (t("images/"),     b("images/")))
-    rsync("-avuz %s %s" % (t("index.html"),  b("index.html")))
-    rsync("-avuz %s %s" % (t("favicon.ico"), b("favicon.ico")))
+    rsync("-az --delete %s %s" % (t("css/"),        b("css/")))
+    rsync("-az --delete %s %s" % (t("images/"),     b("images/")))
+    rsync("-az --delete %s %s" % (t("static/"),     b("static/")))
+    rsync("-az --delete %s %s" % (t("index.html"),  b("index.html")))
+    rsync("-az --delete %s %s" % (t("favicon.ico"), b("favicon.ico")))
 
 @task
 def deploy():
