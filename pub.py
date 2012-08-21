@@ -5,7 +5,7 @@ from codecs import open
 from os.path import join, basename, isfile, isdir
 from pystache import render
 from functools import partial
-from pub.shortcuts import rm, mkdir, rsync, newer
+from pub.shortcuts import rm, mkdir, rsync, newer, git, cd
 
 from lib.utils import parse_bloxsom
 
@@ -71,5 +71,10 @@ def build():
 @task
 def deploy():
     """deploy the site"""
-    rsync("-avuz -e ssh --safe-links --exclude '.git' build/* "
-          "llimllib@billmill.org:~/public_html/")
+    rsync("-avuz -e ssh --safe-links --exclude '.git' build/ "
+          "../llimllib.github.com/")
+    cd("../llimllib.github.com")
+    git("add .")
+    git("add -u")
+    git("commit -m \"updated on %s\"" % strftime("%a, %d %b %Y %X"))
+    git("push origin")
