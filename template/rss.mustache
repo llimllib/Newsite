@@ -1,17 +1,19 @@
-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
-<channel>
-    <title>Bill Mill</title>
-    <link>http://www.billmill.org/</link>
-    <description/>
-    {{#items}}
+<?xml version="1.0" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{blog_title}}</title>
+        <link>{{base_url}}</link>
+        <description>{{blog_desc}}</description>
+        <language>en-us</language>
+        <atom:link href="http://billmill.org/Rss" rel="self" type="application/rss+xml" />
+        {{#blog_entries}}
         <item>
-        <title>{{ title }}</title>
-        <link>{{ url }}</link>
-        <guid isPermaLink="true">{{ url }}</guid>
-        <pubDate>{{ rfc822date }}</pubDate>
-        <description>{{ summary }}</description>
-        <media:title>{{ title }}</media:title>
+            <title>{{title}}</title>
+            <guid isPermaLink="true">{{link}}</guid>
+            <link>{{link}}</link>
+            <description><![CDATA[{{{desc}}}]]></description>
+            <pubDate>{{time}}</pubDate>
         </item>
-    {{/items}}
+        {{/blog_entries}}
 </channel>
 </rss>
