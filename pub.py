@@ -56,6 +56,44 @@ def blog_template():
             regenerate_all()
             break
 
+@task
+def atom():
+    atomdata = {
+        "base_url": "http://billmill.org/",
+        "blog_title": "My Name Rhymes",
+        "blog_desc": "",
+        "last_updated": "",
+        "blog_author": "Bill Mill",
+        "blog_email": "bill.mill@gmail.com",
+        "blog_entries": []
+    }
+
+    entries = []
+    for f in glob("blog_entries/*.txt"):
+        url = basename(f[:-4] + '.html')
+        title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
+        entries.append((time_tuple, title, txt, url))
+
+    #sort them by date descending
+    entries = list(reversed(sorted(entries)))
+
+    atomdata["last_updated"] = strftime('%Y-%m-%dT%H:%M:%SZ', entries[0][0])
+
+    #create the template dict
+    for time, title, txt, url in entries[:5]:
+        atomdata["blog_entries"].append({
+            "title": title,
+            "link": "http://billmill.org/%s" % url,
+            "time": strftime('%Y-%m-%dT%H:%M:%SZ', time),
+            "desc": txt,
+            "text": txt,
+        })
+
+    atom_template = open(join("template", "atom.mustache"), encoding="utf8").read()
+    output = render(atom_template, atomdata)
+
+    open("build/Atom", "w", "utf8").write(output)
+
 @task("make_build", "blog_entry", "blog_template")
 def build():
     t = partial(join, "template")
