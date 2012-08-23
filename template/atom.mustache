@@ -1,25 +1,24 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns='http://www.w3.org/2005/Atom'
-      xmlns:thr='http://purl.org/syndication/thread/1.0'
-      xml:base='http://billmill.org/Atom'
-      xml:lang='en-us'>
- <title>Bill Mill</title>
- <link rel='hub' href='http://pubsubhubbub.appspot.com/' />
- <id>http://billmill.org</id>
- <link href='./' />
- <link rel='self' href='' />
- <icon>/favicon.ico</icon>
- <updated>{{ most_recent_update }}</updated>
- <author><name>Bill Mill</name></author>
-
-{{#items}}
-    <entry xml:base='{{ relative_url }}'>
-     <title>{{ title }}</title>
-     <id>{{ url }}</id>
-     <published>{{ isodate }}</published>
-     <updated>{{ isodate }}</updated>
-     <summary type='xhtml'>{{ summary }}</summary>
-    <content type='xhtml'>{{ summary }}</content></entry>
-{{/items}}
-
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<link rel="self" href="http://billmill.org/Atom/" />
+	<id>{{base_url}}</id>
+	<title>{{blog_title}}</title>
+	<subtitle>{{blog_desc}}</subtitle>
+	<updated>{{last_updated}}</updated>
+	<author>
+		<name>{{blog_author}}</name>
+		<email>{{blog_email}}</email>
+		<uri>{{base_url}}</uri>
+	</author>
+	<link href="{{base_url}}" />
+{{#blog_entries}}
+	<entry>
+		<title>{{title}}</title>
+		<link href="{{e.link}}" />	
+		<id>{{link}}</id>
+		<updated>{{time}}</updated>
+		<summary type="html">{{desc}}</summary>
+		<content type="html">{{text}}</content>
+	</entry>
+{{/blog_entries}}
 </feed>
