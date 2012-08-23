@@ -56,6 +56,46 @@ def blog_template():
             regenerate_all()
             break
 
+def get_recent_entries(n):
+    """return the n most recent blog posts"""
+    entries = []
+    for f in glob("blog_entries/*.txt"):
+        url = basename(f[:-4] + '.html')
+        title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
+        entries.append((time_tuple, title, txt, url))
+
+    #sort them by date descending
+    return list(reversed(sorted(entries)))
+
+@task
+def rss():
+    rssdata = {
+        "base_url": "http://billmill.org/",
+        "blog_title": "My Name Rhymes",
+        "blog_desc": "",
+        "last_updated": "",
+        "blog_author": "Bill Mill",
+        "blog_email": "bill.mill@gmail.com",
+        "blog_entries": []
+    }
+
+    entries = get_recent_entries(5)
+
+    for time, title, txt, url in entries[:5]:
+        rssdata["blog_entries"].append({
+            "title": title,
+            "link": "http://billmill.org/%s" % url,
+            "time": strftime("%a, %d %b %Y %H:%M:%S +0000", time),
+            "desc": txt,
+            "text": txt,
+        })
+
+    rss_template = open(join("template", "rss.mustache"), encoding="utf8").read()
+    output = render(rss_template, rssdata)
+
+    open("build/Rss", "w", "utf8").write(output)
+
+
 @task
 def atom():
     atomdata = {
@@ -68,14 +108,7 @@ def atom():
         "blog_entries": []
     }
 
-    entries = []
-    for f in glob("blog_entries/*.txt"):
-        url = basename(f[:-4] + '.html')
-        title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
-        entries.append((time_tuple, title, txt, url))
-
-    #sort them by date descending
-    entries = list(reversed(sorted(entries)))
+    entries = get_recent_entries(5)
 
     atomdata["last_updated"] = strftime('%Y-%m-%dT%H:%M:%SZ', entries[0][0])
 
@@ -94,7 +127,7 @@ def atom():
 
     open("build/Atom", "w", "utf8").write(output)
 
-@task("make_build", "blog_entry", "blog_template")
+@task("make_build", "blog_entry", "blog_template", "atom", "rss")
 def build():
     t = partial(join, "template")
     b = partial(join, "build")
