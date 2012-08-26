@@ -67,7 +67,7 @@ def get_recent_entries(n):
     #sort them by date descending
     return list(reversed(sorted(entries)))
 
-@task
+@task("make_build")
 def rss():
     rssdata = {
         "base_url": "http://billmill.org/",
@@ -96,7 +96,7 @@ def rss():
     open("build/Rss", "w", "utf8").write(output)
 
 
-@task
+@task("make_build")
 def atom():
     atomdata = {
         "base_url": "http://billmill.org/",
@@ -134,6 +134,7 @@ def build():
 
     #sync static files
     rsync("-az --delete %s %s" % (t("css/"),        b("css/")))
+    rsync("-az --delete %s %s" % (t("CNAME"),       b("CNAME")))
     rsync("-az --delete %s %s" % (t("images/"),     b("images/")))
     rsync("-az --delete %s %s" % (t("static/"),     b("static/")))
     rsync("-az --delete %s %s" % (t("index.html"),  b("index.html")))
