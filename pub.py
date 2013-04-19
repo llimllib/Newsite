@@ -67,9 +67,8 @@ def get_recent_entries(n):
     #sort them by date descending
     return list(reversed(sorted(entries)))
 
-@task("make_build")
-def rss():
-    rssdata = {
+def render_feed(template, timefmt):
+    data = {
         "base_url": "http://billmill.org/",
         "blog_title": "My Name Rhymes",
         "blog_desc": "",
@@ -81,49 +80,33 @@ def rss():
 
     entries = get_recent_entries(5)
 
+    data["last_updated"] = strftime(timefmt, entries[0][0])
+
+    #create the template dict
     for time, title, txt, url in entries[:5]:
-        rssdata["blog_entries"].append({
+        data["blog_entries"].append({
             "title": title,
             "link": "http://billmill.org/%s" % url,
-            "time": strftime("%a, %d %b %Y %H:%M:%S +0000", time),
+            "time": strftime(timefmt, time),
             "desc": txt,
             "text": txt,
         })
 
+    return render(template, data)
+
+
+@task("make_build")
+def rss():
     rss_template = open(join("template", "rss.mustache"), encoding="utf8").read()
-    output = render(rss_template, rssdata)
+    output = render_feed(rss_template, "%a, %d %b %Y %H:%M:%S +0000")
 
     open("build/Rss", "w", "utf8").write(output)
 
 
 @task("make_build")
 def atom():
-    atomdata = {
-        "base_url": "http://billmill.org/",
-        "blog_title": "My Name Rhymes",
-        "blog_desc": "",
-        "last_updated": "",
-        "blog_author": "Bill Mill",
-        "blog_email": "bill.mill@gmail.com",
-        "blog_entries": []
-    }
-
-    entries = get_recent_entries(5)
-
-    atomdata["last_updated"] = strftime('%Y-%m-%dT%H:%M:%SZ', entries[0][0])
-
-    #create the template dict
-    for time, title, txt, url in entries[:5]:
-        atomdata["blog_entries"].append({
-            "title": title,
-            "link": "http://billmill.org/%s" % url,
-            "time": strftime('%Y-%m-%dT%H:%M:%SZ', time),
-            "desc": txt,
-            "text": txt,
-        })
-
     atom_template = open(join("template", "atom.mustache"), encoding="utf8").read()
-    output = render(atom_template, atomdata)
+    output = render_feed(atom_template, '%Y-%m-%dT%H:%M:%SZ')
 
     open("build/Atom", "w", "utf8").write(output)
 
