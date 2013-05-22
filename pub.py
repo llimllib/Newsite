@@ -131,5 +131,5 @@ def deploy():
     cd("../llimllib.github.com")
     git("add .")
     git("add -u")
-    git("commit -m \"updated on %s\"" % strftime("%a, %d %b %Y %X"))
+    git("commit -m 'updated on %s'" % strftime("%a, %d %b %Y %X"))
     git("push origin")
