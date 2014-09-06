@@ -1,3 +1,5 @@
+all: clean build deploy
+
 clean:
 	rm -rf build
 
@@ -10,12 +12,12 @@ build: builddir
 	python render_blogs.py
 
 	#sync static files
-	rsync -az --delete template/css build/css
-	rsync -az --delete template/CNAME build/CNAME
-	rsync -az --delete template/images build/images
-	rsync -az --delete template/static build/static
-	rsync -az --delete template/index.html build/index.html
-	rsync -az --delete template/favicon.ico build/favicon.ico
+	rsync -az --delete template/css build
+	rsync -az --delete template/CNAME build
+	rsync -az --delete template/images build
+	rsync -az --delete template/static build
+	rsync -az --delete template/index.html build
+	rsync -az --delete template/favicon.ico build
 
 deploy:
 	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ ../llimllib.github.com/
