@@ -6,6 +6,9 @@ clean:
 builddir:
 	mkdir -p build
 
+serve:
+	modd # see modd.conf for details
+
 build: builddir
 	# just render all blogs. It's not expensive. Eventually, could choose to only
 	# render updated blogs as long as template hasn't changed
@@ -30,4 +33,4 @@ deploy:
 		git push origin
 
 
-.PHONY: clean builddir build deploy
+.PHONY: all clean builddir build deploy
