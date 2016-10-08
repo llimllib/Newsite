@@ -13,7 +13,7 @@ def outname(f):
 
 def render_posts():
     for f in glob("blog_entries/*.txt"):
-        print "rendering: ", f
+        print("rendering: {}".format(f))
 
         title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
 
