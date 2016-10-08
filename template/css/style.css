@@ -9,6 +9,12 @@ code {
     font-size: 14px;
 }
 
+blockquote {
+    padding: 10px;
+    background-color: #f0f0fc;
+    border-left: 3px solid #666;
+}
+
 a, a:visited {
     color: black;
 }
