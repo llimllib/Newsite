@@ -24,7 +24,7 @@ def parse_bloxsom(openfilehandle):
     while lines[0].startswith("#"):
         k, v = lines.pop(0).strip("#\n").split(" ", 1)
         meta[k] = v
-        
+
     txt = "".join(lines)
     txt = highlight_code(txt, True)
 
@@ -33,7 +33,7 @@ def parse_bloxsom(openfilehandle):
     if 'time' in meta:
         time_tuple = strptime(meta['time'], "%m-%d-%y %H:%M")
     else:
-        time_tuple = localtime(cache(f).st_mtime)
+        time_tuple = localtime(cache(openfilehandle.name).st_mtime)
 
     return title, meta, time_tuple, txt
 
