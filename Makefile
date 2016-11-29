@@ -23,14 +23,7 @@ build: builddir
 	rsync -az --delete template/favicon.ico build
 
 deploy:
-	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ ../llimllib.github.com/
-
-	# execute the deploy commands in llimllib.github.com directory
-	cd ../llimllib.github.com/ && \
-		git add . && \
-		git add -u && \
-		git commit -m "updated on `date`" && \
-		git push origin
+	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ hubvan.com:/srv/billmill.org/
 
 
 .PHONY: all clean builddir build deploy
