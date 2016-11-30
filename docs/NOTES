@@ -1,0 +1,68 @@
+* Setting up on huban with nginx + letsencrypt
+    * www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04
+    * nginx conf is at /etc/nginx/sites-available/default
+    * to restart nginx: sudo service nginx restart
+    * OK, nginx is running but we can't even hit :80. What gives?
+    * I had to uninstall and reinstall because shit wasn't working
+        * Couldn't hit port 80 and get the default message :(
+    * I had ufw firewall installed. Commands to get 80 and 443 enabled:
+        * sudo ufw allow http
+        * sudo ufw allow https
+    * add /.well-known to nginx config:
+
+        location ~ /.well-known {
+            allow all;
+        }
+
+    * restart nginx
+    * get the cert:
+        certbot-auto certonly -a webroot --webroot-path=/srv/hubvan.com -d hubvan.com -d www.hubvan.com
+    * failed because www.hubvan.com is not available.
+        * had to add a cname for www.
+        * had to clear the DNS cache locally to be able to hit it:
+
+            sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
+
+        * https://www.digitalocean.com/community/tutorials/how-to-set-up-a-host-name-with-digitalocean
+    * next, the config failed to reload; the nginx master process crashed but the workers were still running
+        * I killed those and got hubvan to load. Now to retry cerbot!
+    * success! domain verified and certs generated
+
+        Your certificate and chain have been saved at
+           /etc/letsencrypt/live/hubvan.com/fullchain.pem. Your cert will
+           expire on 2017-02-27
+
+    * create a "strong diffie-helman group"?
+
+        sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
+    * copy the security block given in the DO tutorial article
+    * add the redirect from 80 to 443
+    * restart nginx
+    * get an A+! https://www.ssllabs.com/ssltest/analyze.html?d=hubvan.com&latest
+
+* moving billmill.org over
+    * set DO as the ns at hover
+    * add MX records to DO (https://www.fastmail.com/help/receive/domains-setup-mxonly.html)
+        * think my email is broken :(
+        * https://www.fastmail.com/settings/domains?u=49644117
+    * comment out ssl config, set to port 80, generate cert
+
+        $ certbot-auto certonly -a webroot --webroot-path=/srv/billmill.org -d billmill.org -d www.billmill.org
+
+        IMPORTANT NOTES:
+         - Congratulations! Your certificate and chain have been saved at
+           /etc/letsencrypt/live/billmill.org/fullchain.pem. Your cert will
+           expire on 2017-02-27. To obtain a new or tweaked version of this
+           certificate in the future, simply run certbot-auto again. To
+           non-interactively renew *all* of your certificates, run
+           "certbot-auto renew"
+         - If you like Certbot, please consider supporting our work by:
+
+           Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+           Donating to EFF:                    https://eff.org/donate-le
+
+        10:17 PM hubvan:/usr/local/sbin
+    * reset domain config
+    * had to remove ipv6 config because nginx complained, but whatevs.
+https://www.ssllabs.com/ssltest/analyze.html?d=billmill.org&latest
