@@ -1,4 +1,7 @@
-all: clean build deploy
+all: clean build
+
+requirements:
+	pip install -r requirements.py
 
 clean:
 	rm -rf build
@@ -9,7 +12,7 @@ builddir:
 serve:
 	modd # see modd.conf for details
 
-build: builddir
+build: requirements builddir
 	# just render all blogs. It's not expensive. Eventually, could choose to only
 	# render updated blogs as long as template hasn't changed
 	python render_blogs.py
@@ -23,7 +26,7 @@ build: builddir
 	rsync -az --delete template/favicon.ico build
 
 deploy:
-	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ hubvan.com:/srv/billmill.org/
+	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ billmill.org:/srv/billmill.org/
 
 
-.PHONY: all clean builddir build deploy
+.PHONY: all requirements clean builddir build deploy
