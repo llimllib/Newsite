@@ -1,9 +1,15 @@
 import os
+import re
 from time import strptime, localtime
-from distutils.file_util import copy_file, DistutilsFileError
-from distutils.dir_util import mkpath
+
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+from pygments.util import ClassNotFound
+
 
 STAT_CACHE = {}
+
 
 def cache(f):
     """Return the cached stat if it exists, otherwise, re-stat the file
@@ -13,13 +19,14 @@ def cache(f):
     Assumes files never change."""
     return STAT_CACHE.get(f, os.stat(f))
 
+
 def parse_bloxsom(openfilehandle):
     lines = openfilehandle.readlines()
 
-    #the first line is the title
+    # the first line is the title
     title = lines.pop(0).strip()
 
-    #read metadata
+    # read metadata
     meta = {}
     while lines[0].startswith("#"):
         k, v = lines.pop(0).strip("#\n").split(" ", 1)
@@ -28,33 +35,49 @@ def parse_bloxsom(openfilehandle):
     txt = "".join(lines)
     txt = highlight_code(txt, True)
 
-    #TODO: pygmentize code snippets
-
-    if 'time' in meta:
-        time_tuple = strptime(meta['time'], "%m-%d-%y %H:%M")
+    if "time" in meta:
+        time_tuple = strptime(meta["time"], "%m-%d-%y %H:%M")
     else:
         time_tuple = localtime(cache(openfilehandle.name).st_mtime)
 
     return title, meta, time_tuple, txt
 
-import re
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
-from pygments.util import ClassNotFound
 
-CODE_RE = re.compile("<code (?:\s*lang=(.*?))*>(.*?)<(?#)/code>", re.S)
+# CODE_RE = re.compile(r"<code[^>]*(?:lang=(.*?))*>(.*?)<(?#)/code>", re.S)
+CODE_RE = re.compile(r"<code(.*?)>(.*?)</code>", re.S)
+
 
 def highlight_code(textstr, font_tags=False):
-    for lang, code in CODE_RE.findall(textstr):
-        if not lang: lang = "python"
+    for attr_string, code in CODE_RE.findall(textstr):
+        # attrs is a string like ' class="inline" lang="python"'; split it by
+        # spaces then by equals, strip quotes, and turn it into a dictionary
+        attrs = {}
+        if attr_string.strip():
+            attrs = dict(
+                map(lambda z: z.strip('"'), y.split("=")) for y in attr_string.split()
+            )
 
         try:
-            lexer = get_lexer_by_name(lang.strip('"'))
+            lexer = get_lexer_by_name(attrs.get("lang", "python"))
         except ClassNotFound:
             return
-        formatter = HtmlFormatter(style="friendly", noclasses=font_tags)
-        code = highlight(code, lexer, formatter)
 
-        textstr = CODE_RE.sub(code, textstr, 1)
+        # add the inline class if present
+        if "class" in attrs and "inline" in attrs["class"].split():
+            formatter = HtmlFormatter(
+                style="friendly", noclasses=font_tags, nowrap=True
+            )
+            code = highlight(code, lexer, formatter)
+            code = code.replace("span", 'span class="highlight inline"', 1)
+        else:
+            formatter = HtmlFormatter(style="friendly", noclasses=font_tags)
+            code = highlight(code, lexer, formatter)
+
+        # make code a lambda so it doesn't process slashes:
+        #
+        # repl can be either a string or a callable;
+        # if a string, backslash escapes in it are processed.  If it is
+        # a callable, it's passed the Match object and must return
+        # a replacement string to be used.
+        textstr = CODE_RE.sub(lambda _: code, textstr, 1)
     return textstr
