@@ -9,6 +9,9 @@ CSS=template/css/style.css
 
 all: build
 
+requirements:
+	pip install -r requirements.py
+
 clean:
 	rm -rf build
 
