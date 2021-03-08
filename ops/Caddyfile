@@ -1,0 +1,20 @@
+# https://caddyserver.com/docs/caddyfile/concepts#environment-variables
+{$HOST:billmill.org} {
+    root * ../build
+    file_server
+
+    # These are the github repos I have which have gh-pages branches; I
+    # foolishly used github to host them for a long time under the billmill.org
+    # domain and now I have to redirect them to keep the URLs alive
+    @old_github_url {
+        path_regexp old_github_url ^\/(champsleagueviz|bloomfilter-tutorial|roundbracket|solving-sol|ncaa-bracket-randomizer|pymag-trees|fantasypl|ratesoccer|lichesstree|magahat|aiclass|Extractotron|covidgraph)
+    }
+    redir @old_github_url https://llimllib.github.io/{http.regexp.old_github_url.1}
+}
+
+# https://caddyserver.com/docs/quick-starts/reverse-proxy
+# To make this a localhost subdomain work in Safari, I had to add
+# `127.0.0.1 journal.localhost` to /etc/hosts
+{$JOURNAL_HOST:journal.billmill.org} {
+    reverse_proxy {$JOURNAL:127.0.0.1:11111}
+}
