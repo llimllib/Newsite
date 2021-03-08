@@ -1,3 +1,4 @@
 *.pyc
 build
 blog_entries
+.envrc

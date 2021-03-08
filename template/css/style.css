@@ -1,6 +1,7 @@
 body {
     font: 20px Georgia,'Times New Roman',serif;
     margin-top: 20px;
+    line-height: 1.6em;
 }
 
 body.index {
@@ -98,3 +99,14 @@ em.caption {
     top: -20px;
     left: 20px;
 }
+
+ul {
+    list-style: disc inside;
+    line-height: 1.6em;
+}
+
+img.resize {
+    width: 100%; /* you can use % */
+    height: auto;
+}
+

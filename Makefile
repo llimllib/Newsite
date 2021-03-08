@@ -23,7 +23,7 @@ build: builddir
 	rsync -az --delete template/favicon.ico build
 
 deploy:
-	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ hubvan.com:/srv/billmill.org/
+	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ root@beta.billmill.org:/var/www/html/
 
 
 .PHONY: all clean builddir build deploy
