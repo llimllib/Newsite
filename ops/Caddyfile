@@ -1,3 +1,7 @@
+{
+    debug
+}
+
 # https://caddyserver.com/docs/caddyfile/concepts#environment-variables
 {$HOST:billmill.org} {
     root * ../build
@@ -7,9 +11,22 @@
     # foolishly used github to host them for a long time under the billmill.org
     # domain and now I have to redirect them to keep the URLs alive
     @old_github_url {
-        path_regexp old_github_url ^\/(champsleagueviz|bloomfilter-tutorial|roundbracket|solving-sol|ncaa-bracket-randomizer|pymag-trees|fantasypl|ratesoccer|lichesstree|magahat|aiclass|Extractotron|covidgraph)
+        path_regexp old_github_url ^\/((?:champsleagueviz|bloomfilter-tutorial|roundbracket|solving-sol|ncaa-bracket-randomizer|pymag-trees|fantasypl|ratesoccer|lichesstree|magahat|aiclass|Extractotron|covidgraph).*)
     }
     redir @old_github_url https://llimllib.github.io/{http.regexp.old_github_url.1}
+
+    handle_path /hmdaproxy/* {
+        reverse_proxy {
+            to https://ffiec.cfpb.gov
+            # if we don't set this, the ELB rejects our request with a 503
+            header_up Host "ffiec.cfpb.gov"
+            header_up -X-Forwarded-For
+            header_up -X-Forwarded-Proto
+            header_down Access-Control-Allow-Origin "*"
+            header_down Access-Control-Allow-Methods "GET,POST"
+            header_down Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+        }
+    }
 }
 
 # https://caddyserver.com/docs/quick-starts/reverse-proxy
