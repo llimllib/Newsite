@@ -25,5 +25,9 @@ build: builddir
 deploy:
 	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ root@beta.billmill.org:/var/www/html/
 
+# sync the cdn dir to the static bucket on my cdn
+cdn:
+	s3cmd sync --acl-public cdn/ s3://llimllib/static/
 
-.PHONY: all clean builddir build deploy
+
+.PHONY: all clean builddir build deploy cdn
