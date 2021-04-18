@@ -1,3 +1,28 @@
+pre {
+    display: inline;
+}
+
+.container {
+    margin-left: 20px;
+    max-width: 800px;
+}
+
+/* we float code samples (pygments adds the "highlight" class) to the left so
+ * that they're allowed to overflow the main article container. They have the
+ * same min-width as the container has max so that short code samples don't get
+ * wrapped around */
+div.highlight {
+    float: left;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    min-width: 800px;
+}
+
+span.highlight.inline {
+    padding: 4px;
+    background-color: #f0f0f0;
+}
+
 body {
     font: 20px Georgia,'Times New Roman',serif;
     margin-top: 20px;
@@ -16,9 +41,10 @@ code {
 
 blockquote {
     padding: 10px;
-    background-color: #f0f0fc;
+    background-color: #f8f8fc;
     border-left: 3px solid #666;
     line-height: 1.4em;
+    /* something */
 }
 
 a, a:visited {
@@ -43,18 +69,19 @@ h2 {
 
 h3 {
     margin-top: 20px;
-    font:  18px Georgia,'Times New Roman',serif underline;
+    font:  18px Georgia,'Times New Roman',serif,underline;
 }
 
 h3 {
     margin-top: 20px;
-    font:  18px Georgia,'Times New Roman',serif underline;
+    font:  18px Georgia,'Times New Roman',serif,underline;
 }
 
 h4 {
     margin-top: 20px;
     margin-bottom: 20px;
-    font:  12px Georgia,'Times New Roman',serif underline;
+    font:  italic 16px Georgia,'Times New Roman',serif;
+    font-color: #888888;
 }
 
 p img {
@@ -69,6 +96,7 @@ p {
 }
 
 .content {
+    margin-left: 40px;
     margin-top: 40px;
 }
 
@@ -86,7 +114,7 @@ p {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    font:  12px Georgia,'Times New Roman',serif underline;
+    font:  12px Georgia,'Times New Roman',serif,underline;
 }
 
 .footer a, .footer a:visited {
