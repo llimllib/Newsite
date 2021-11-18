@@ -53,4 +53,10 @@ deploy:
 cdn:
 	s3cmd sync --acl-public cdn/ s3://llimllib/static/
 
-.PHONY: all clean builddir serve prerequisites build deploy cdn
+# flush the digital ocean CDN
+flush:
+	doctl compute cdn flush \
+		$$(doctl compute cdn list --format ID | tail -n1) \
+		--files nbastats/*
+
+.PHONY: all clean builddir serve prerequisites build deploy cdn flush
