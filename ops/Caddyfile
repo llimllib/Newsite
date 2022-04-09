@@ -37,7 +37,12 @@
 }
 
 {$NOTES_HOST:notes.billmill.org} {
+    # the CDN won't serve index.html at /, so treat it specially
+    rewrite / /obsidian_html/index.html
+
+    # otherwise, just return the file
     rewrite * /obsidian_html{path}
+
     reverse_proxy https://cdn.billmill.org {
         header_up Host {upstream_hostport}
     }
