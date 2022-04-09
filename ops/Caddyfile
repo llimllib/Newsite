@@ -35,3 +35,10 @@
 {$JOURNAL_HOST:journal.billmill.org} {
     reverse_proxy {$JOURNAL:127.0.0.1:11111}
 }
+
+{$NOTES_HOST:notes.billmill.org} {
+    rewrite * /obsidian_html{path}
+    reverse_proxy https://cdn.billmill.org {
+        header_up Host {upstream_hostport}
+    }
+}
