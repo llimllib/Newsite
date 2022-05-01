@@ -5,6 +5,7 @@ pre {
 .container {
     margin-left: 20px;
     max-width: 800px;
+    margin-bottom: 100px;
 }
 
 /* we float code samples (pygments adds the "highlight" class) to the left so
@@ -75,6 +76,7 @@ h3 {
 h3 {
     margin-top: 20px;
     font:  18px Georgia,'Times New Roman',serif,underline;
+    font-style: italic;
 }
 
 h4 {
