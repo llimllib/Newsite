@@ -64,13 +64,11 @@ def highlight_code(textstr, font_tags=False):
 
         # add the inline class if present
         if "class" in attrs and "inline" in attrs["class"].split():
-            formatter = HtmlFormatter(
-                style="friendly", noclasses=font_tags, nowrap=True
-            )
+            formatter = HtmlFormatter(style="xcode", noclasses=font_tags, nowrap=True)
             code = highlight(code, lexer, formatter)
             code = code.replace("span", 'span class="highlight inline"', 1)
         else:
-            formatter = HtmlFormatter(style="friendly", noclasses=font_tags)
+            formatter = HtmlFormatter(style="xcode", noclasses=font_tags)
             code = highlight(code, lexer, formatter)
 
         # make code a lambda so it doesn't process slashes:
