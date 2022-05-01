@@ -47,7 +47,7 @@ build: prerequisites builddir $(TEMPLATES) $(CSS)
 # 	python render_blog.py $<
 
 deploy:
-	rsync -az --delete -e ssh --safe-links --exclude '.git' build/ root@beta.billmill.org:/var/www/html/
+	rsync -az --delete -e "ssh -i $$HOME/.ssh/billmill.org.key" --safe-links --exclude '.git' build/ root@billmill.org:/var/www/html/
 
 # sync the cdn dir to the static bucket on my cdn
 cdn:
