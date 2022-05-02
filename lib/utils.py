@@ -59,7 +59,7 @@ def highlight_code(textstr, font_tags=False):
             lexer = get_lexer_by_name(attrs.get("lang", "python"))
         except ClassNotFound:
             print(f'Unable to find lexer for {attrs.get("lang", "python")}')
-            return code
+            continue
 
         # add the inline class if present
         if "class" in attrs and "inline" in attrs["class"].split():
