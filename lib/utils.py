@@ -53,14 +53,13 @@ def highlight_code(textstr, font_tags=False):
         # spaces then by equals, strip quotes, and turn it into a dictionary
         attrs = {}
         if attr_string.strip():
-            attrs = dict(
-                map(lambda z: z.strip('"'), y.split("=")) for y in attr_string.split()
-            )
+            attrs = dict(re.findall(r'(\w+)="(.*?)"', attr_string))
 
         try:
             lexer = get_lexer_by_name(attrs.get("lang", "python"))
         except ClassNotFound:
-            return
+            print(f'Unable to find lexer for {attrs.get("lang", "python")}')
+            return code
 
         # add the inline class if present
         if "class" in attrs and "inline" in attrs["class"].split():
