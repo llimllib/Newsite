@@ -81,6 +81,13 @@ h3 {
     font-style: italic;
 }
 
+.blogdate {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font:  italic 16px Georgia,'Times New Roman',serif;
+    font-color: #888888;
+}
+
 h4 {
     margin-top: 20px;
     margin-bottom: 20px;
