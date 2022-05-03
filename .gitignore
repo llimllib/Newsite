@@ -1,6 +1,5 @@
 *.pyc
 build
-blog_entries
 .envrc
 # this file is large-ish, consider removing from history if it's annoying
 # cdn/reassess/property_data.json
