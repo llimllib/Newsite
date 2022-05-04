@@ -1,0 +1,108 @@
+Bundle d3 with esbuild
+# time 05-04-22 09:00
+<script src="https://cdn.billmill.org/static/blog/bundle_d3_with_esbuild/bundle.js"></script>
+
+<p>Over the <a href="/making_a_us_choropleth.html">last</a> <a href=/making_a_us_map.html">few</a> <a href="/observable_plot.html">blog posts</a>, I've built some small javascript applications. Each time, I've used a regular old <span class="highlight inline">&lt;script&gt;</span> tag to download the libraries I need, rather than deal with bundling javascript.
+
+<p>Using <span class="highlight inline">&lt;script&gt;</span> tags works for quick stuff, but eventually you're likely going to want to build a Javascript bundle to minimize the amount of javascript your client has to download.
+
+<p>There are <a href="https://webpack.js.org/">several</a> <a href="https://rollupjs.org/guide/en/">tools</a> <a href="https://www.snowpack.dev/">for</a> <a href="https://parceljs.org/">building</a> javascript bundles, but my favorite is <a href="https://esbuild.github.io/">esbuild</a>.
+
+<p>To build a javascript bundle, I start by installing all my dependencies and esbuild:
+
+<code lang="console">
+npm install d3-array d3-fetch d3-geo d3-queue \
+    d3-scale d3-scale-chromatic d3-selection \
+    esbuild topojson-client
+</code>
+
+<p>In the previous blog posts, I downloaded a large d3 bundle and worked with
+it for convenience; but d3 is built as a series of packages and the best way to
+work with it is to select only the ones I need. This lets me ship a smaller bundle
+to my clients and makes my application faster to load.
+
+<p>The next step is to modify the <a href="/making_a_us_choropleth.html#map">javascript I'm using</a> to use the npm modules I just installed instead of relying on global d3 and topojson variables. I changed <span class="highlight inline">map.js</span> to import its dependencies explicitly:
+
+<code lang="js">
+import { extent } from "d3-array";
+import { json } from "d3-fetch";
+import { geoPath } from "d3-geo";
+import { scaleLog } from "d3-scale";
+import { interpolateGreys } from "d3-scale-chromatic";
+import { select } from "d3-selection";
+import { feature } from "topojson-client";
+
+function map(mapData, populationData) {
+  const width = 975,
+    height = 610,
+    scale = scaleLog().domain(extent(Object.values(populationData))),
+    colorScale = (d) => interpolateGreys(scale(d));
+
+  const svg = select("#map")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, 975, 610])
+    .attr("style", "width: 100%; height: auto; height: intrinsic;");
+
+  const usa = svg
+    .append("g")
+    .append("path")
+    .datum(feature(mapData, mapData.objects.nation))
+    .attr("d", geoPath());
+
+  const state = svg
+    .append("g")
+    .attr("stroke", "#444")
+    .selectAll("path")
+    .data(feature(mapData, mapData.objects.states).features)
+    .join("path")
+    .attr("fill", (d) => colorScale(populationData[d.properties.name]))
+    .attr("vector-effect", "non-scaling-stroke")
+    .attr("d", geoPath());
+}
+
+window.addEventListener("DOMContentLoaded", async (event) => {
+  map(
+    ...(await Promise.all([
+      json(`https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json`),
+      json(`https://cdn.billmill.org/static/blog/us_choro/population.json`),
+    ]))
+  );
+});
+</code>
+
+<p>To compile our updated code, I use esbuild like this:
+
+<code lang="console">
+node_modules/.bin/esbuild map.js --bundle --outfile=bundle.js --sourcemap
+</code>
+
+<p>I'm using three command line flags for esbuild:
+<ul>
+  <li><span class="highlight inline">--bundle</span> creates a bundle out of my file and its depdendcies
+  <li><span class="highlight inline">--outfile</span> specifies where to put the bundle
+  <li><span class="highlight inline">--sourcemap</span> tells esbuild to make a <a href="https://firefox-source-docs.mozilla.org/devtools-user/debugger/how_to/use_a_source_map/index.html">source map</a>, which makes debugging possible
+</ul>
+
+<p>Check out the <a href="http://manpages.ubuntu.com/manpages/impish/man1/esbuild.1.html">man page</a> for all the command line options, and you can dig into the <a href="https://esbuild.github.io/api/">API</a> to do more complicated things.
+
+<p>At this point, I have a bundle file called <span class="highlight inline">bundle.js</span> which contains my code and all its dependencies, and <span class="highlight inline">bundle.js.map</span> which contains debugging information that will help the browser show me useful errors and let me debug my application.
+
+<p>The last step is to create a web page that loads my json and displays the map:
+
+<code lang="html">
+<html>
+  <head>
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <div id="map">
+    </div>
+  </body>
+</html>
+</code>
+
+<p>And finally, I have a single javascript file to display the same map I made before:
+
+<div id="map"></div>
