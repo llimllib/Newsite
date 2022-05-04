@@ -2654,7 +2654,14 @@
     const usa = svg.append("g").append("path").datum(feature_default(mapData, mapData.objects.nation)).attr("d", path_default());
     const state = svg.append("g").attr("stroke", "#444").selectAll("path").data(feature_default(mapData, mapData.objects.states).features).join("path").attr("fill", (d) => colorScale(populationData[d.properties.name])).attr("vector-effect", "non-scaling-stroke").attr("d", path_default());
   }
-  window.addEventListener("DOMContentLoaded", async (event) => {
+  function onready(f) {
+    if (document.readyState !== "loading") {
+      f();
+    } else {
+      window.addEventListener("DOMContentLoaded", f);
+    }
+  }
+  onready(async (event) => {
     map2(...await Promise.all([
       json_default(`https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json`),
       json_default(`https://cdn.billmill.org/static/blog/us_choro/population.json`)
