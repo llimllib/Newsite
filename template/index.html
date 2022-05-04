@@ -48,23 +48,9 @@
 
     <div class="grid_4 prefix_1 mainboxes">
         <h2>Blogs</h2>
-        <h3><a href="https://billmill.org/making_a_us_choropleth.html">Making a US State Choropleth Map</a>
-        <h3><a href="https://billmill.org/making_a_us_map.html">Making a US web map with d3</a>
-        <h3><a href="https://billmill.org/observable_plot.html">Working with
-            Observable Plot</a></h3>
-        <h3><a href="https://billmill.org/sol_1136.html">Imitating Sol LeWitt Wall
-            Drawing #1136</a></h3>
-        <p>Notes from my spare time project on creating a curve</p>
-        <h3><a href="https://billmill.org/fantasypl">Choosing a Fantasy Football Team</a></h3>
-        <p>Slides and notes from a talk I gave on using IPython to generate a fantasy football team</p>
-        <h3><a href="https://billmill.org/permvis.html">Visualizing Permutations</a></h3>
-        <p>A visual demonstration of how a few permutation algorithms work</p>
-        <h3><a href="https://billmill.org/multi_line_lambdas.html">Multi-line lambdas in Python</a></h3>
-        <p>Hacking python's <em>with</em> statement for fun and profit</p>
-        <h3><a href="https://billmill.org/the_histogram.html">Image Programming Tutorials</a></h3>
-        <p>Two tutorials on processing images with javascript, <a href="https://billmill.org/the_histogram.html">The Histogram</a> and <a href="https://billmill.org/monotone.html">Converting to Monochrome</a>
-        <h3><a href="https://billmill.org/institutional_memory.html">Institutional Memory</a></h3>
-        <p>Playing to win for the long haul instead of the short term</p>
+{{#blog_entries}}
+  <h3><a href="{{ link }}">{{ title }}</a></h3>
+{{/blog_entries}}
     </div>
 
     <div class="grid_3 prefix_1 mainboxes">
