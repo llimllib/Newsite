@@ -1,6 +1,6 @@
 Bundle d3 with esbuild
 # time 05-04-22 09:00
-<script src="https://cdn.billmill.org/static/blog/bundle_d3_with_esbuild/bundle.js"></script>
+<script async src="https://cdn.billmill.org/static/blog/bundle_d3_with_esbuild/bundle.js"></script>
 
 <p>Over the <a href="/making_a_us_choropleth.html">last</a> <a href=/making_a_us_map.html">few</a> <a href="/observable_plot.html">blog posts</a>, I've built some small javascript applications. Each time, I've used a regular old <span class="highlight inline">&lt;script&gt;</span> tag to download the libraries I need, rather than deal with bundling javascript.
 
