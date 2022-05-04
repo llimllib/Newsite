@@ -37,7 +37,7 @@ build: prerequisites builddir $(TEMPLATES) $(CSS)
 	rsync -az --delete template/images build
 	rsync -az --delete template/static build
 	rsync -az --delete template/favicon.ico build
-	rsync -az --delete template/index.html build
+	rsync -az --delete template/reassess build
 
 # This works, and I like it in theory since it lets us build only the blogs
 # that changed, but it's very slow due to python startup time I think
@@ -57,6 +57,6 @@ cdn:
 flush:
 	doctl compute cdn flush \
 		$$(doctl compute cdn list --format ID | tail -n1) \
-		--files nbastats/*
+		--files *
 
 .PHONY: all clean builddir serve prerequisites build deploy cdn flush
