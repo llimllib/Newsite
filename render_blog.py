@@ -28,8 +28,7 @@ def render_posts(posts):
 
         timestr = strftime("%b %d, %Y", time_tuple)
 
-        url = "http://billmill.org/%s" % relative_url(f)
-        datelink = '<a href="%s">%s</a>' % (url, timestr)
+        datelink = f'<a href="{relative_url(f)}">{timestr}</a>'
 
         output = render(
             blog_template, {"title": title, "content": txt, "datelink": datelink}
@@ -42,6 +41,8 @@ def render_posts(posts):
 Entry = Tuple[struct_time, str, str, str, Dict[str, str]]
 
 
+# XXX: this is getting entries out of order I think, US map for the web is
+# showing as newer than US State choropleth
 def get_recent_entries(n: int) -> List[Entry]:
     """return the n most recent blog posts"""
     entries = []
@@ -89,7 +90,7 @@ def render_index(entries: List[Any]) -> None:
         data["blog_entries"].append(
             {
                 "title": title,
-                "link": "https://billmill.org/%s" % url,
+                "link": url,
                 "time": strftime("%m %d, %Y", time),
                 "desc": txt,
                 "text": txt,
