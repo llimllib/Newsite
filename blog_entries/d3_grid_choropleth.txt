@@ -1,0 +1,133 @@
+Make a grid choropleth with d3
+#time 05-05-22 10:00
+<script async src="https://cdn.billmill.org/static/blog/gridmap/bundle.js"></script>
+
+<p>A few days ago I showed you how I <a href="/making_a_us_choropleth.html">made a US State choropleth</a>. That's a nice map, but sometimes showing the shapes and areas of states can <a href="https://medium.com/civic-tech-thoughts-from-joshdata/how-that-map-you-saw-on-538-under-represents-minorities-by-half-and-other-reasons-to-consider-a-4a98f89cbbb1">make it difficult to interpret the information you're trying to present</a>.
+
+<p>In those cases, one common and easy technique you can use is the grid choropleth, where you assign the places you're mapping to a grid, and map them each with equal size.
+
+<p>A technique I'd like to get to, but won't cover in this post, is the grid <em>cartogram</em><a href="#f1">¹</a>, where you use shapes on the map with area proportional to the population contained within.
+
+<div id="map" style="margin-top: 40px; margin-bottom: 40px"></div>
+
+<h2>Building a grid</h2>
+
+Let's start with a list of states:
+
+<code lang="js">
+states = {
+  AK: { name: "Alaska", key: "AK" },
+  ME: { name: "Maine", key: "ME" },
+  VT: { name: "Vermont", key: "VT" },
+  NH: { name: "New Hampshire", key: "NH" },
+  MA: { name: "Massachusetts", key: "MA" },
+  // ...etc
+</code>
+
+<p>And then declare how we want them to be shown in a grid:
+
+<code lang="js">
+grid = [
+  ["AK", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "ME"],
+  ["  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "VT", "NH"],
+  ["  ", "WA", "ID", "MT", "ND", "MN", "IL", "WI", "MI", "CT", "MA", "RI"],
+  ["  ", "OR", "NV", "WY", "SD", "IA", "IN", "OH", "PA", "NY", "NJ", "  "],
+  ["  ", "CA", "UT", "CO", "NE", "MO", "KY", "WV", "VA", "MD", "DE", "  "],
+  ["  ", "  ", "AZ", "NM", "KS", "AR", "TN", "NC", "SC", "DC", "  ", "  "],
+  ["  ", "  ", "  ", "  ", "OK", "LA", "MS", "AL", "GA", "  ", "  ", "  "],
+  ["HI", "  ", "  ", "  ", "TX", "  ", "  ", "  ", "  ", "FL", "  ", "  "],
+];
+</code>
+
+<p>There's no such thing as a perfect grid (is Connecticut on the great lakes?), but this will get the job done. We're just trying to communicate relative values here, not to give a perfect geographical picture.
+
+<p>Then we need a little function to join the grid to the states object, so our program knows where to put each state's square:
+
+<code lang="js">
+function match(grid, states) {
+  for (row = 0; row < grid.length; row++) {
+    for (col = 0; col < grid[0].length; col++) {
+      if (grid[row][col] !== "  ") {
+        states[grid[row][col]].y = row;
+        states[grid[row][col]].x = col;
+      }
+    }
+  }
+}
+match(grid, states);
+</code>
+
+<h2>Displaying the map</h2>
+
+<p>In previous maps, our mapping function converted geographic data into SVG paths. This time our job is a little easier, since all we have to do now is draw a square for each state, fill it in appropriately, and add a label. The full function, with annotations, follows:
+
+<code lang="js">
+function map(populationData) {
+  const width = 975,
+    height = 610,
+
+    // the amount of padding between the squares
+    padding = 2,
+
+    // I added an explicit range. Since we no longer have borders like we did
+    // before, if we allow the least populous state to go down to zero color,
+    // it becomes invisible, so make sure every state gets at least 0.3 color
+    scale = scaleLog()
+      .domain(extent(Object.values(populationData)))
+      .range([0.3, 1]),
+
+    // Let's make it blue instead of grey, it's more fun
+    colorScale = (d) => interpolateBlues(scale(d)),
+
+    // Calculate the size of the squares that best fills in the map
+    cols = grid[0].length,
+    rows = grid.length,
+    squareSize = min([
+      (width - cols * padding * 2) / cols,
+      (height - rows * padding * 2) / rows,
+    ]);
+
+  // create our svg, just as before
+  const svg = select("#map")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height])
+    .attr("style", "width: 100%; height: auto; height: intrinsic;");
+
+  // Create an SVG group (the "g" element:
+  // https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g )
+  // for each state; we'll append a square and a text label to each
+  const statesg = svg
+    .append("g")
+    .selectAll("g")
+    .data(Object.values(states))
+    .join("g");
+
+  // Add the state's square to the SVG
+  statesg
+    .append("rect")
+    .attr("x", (d) => d.x * (squareSize + padding * 2))
+    .attr("y", (d) => d.y * (squareSize + padding * 2))
+    .attr("width", squareSize)
+    .attr("height", squareSize)
+    .attr("state", (d) => d.name)
+    .attr("fill", (d) => colorScale(populationData[d.name]));
+
+  // Add a text label for each state
+  statesg
+    .append("text")
+    .attr("x", (d) => d.x * (squareSize + padding * 2) + squareSize / 2)
+    .attr("y", (d) => d.y * (squareSize + padding * 2) + squareSize / 2)
+    .attr("fill", "white")
+    .style("text-anchor", "middle")
+    .attr("dominant-baseline", "central")
+    .text((d) => d.key);
+}
+</code>
+
+<p>The full code for this example is <a href="https://github.com/llimllib/Newsite/blob/507e57cc253534934d46ac88e92bdb5f5320b76b/cdn/blog/gridmap/map.js">available here</a>.
+
+<h2>Footnotes</h2>
+
+<p id="f1">¹: The terminology used on the web seems to be all over the place, so I'm not certain I'm using this definition right. I'd like to explore this further in future posts, but I'm calling it good enough for now
