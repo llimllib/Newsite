@@ -25,7 +25,8 @@ prerequisites:
 	pip install -r requirements.txt
 
 build: prerequisites builddir $(TEMPLATES) $(CSS)
-	# for now, just build all the blogs, it takes .5s
+	# render all the blog entries - I'd like to do just the ones that need to
+	# be built but I haven't yet figured out how to express that
 	python render_blog.py $(BLOG_ENTRIES)
 
 	# then render the feeds
@@ -39,12 +40,18 @@ build: prerequisites builddir $(TEMPLATES) $(CSS)
 	rsync -az --delete template/favicon.ico build
 	rsync -az --delete template/reassess build
 
-# This works, and I like it in theory since it lets us build only the blogs
-# that changed, but it's very slow due to python startup time I think
+# We use the .blog_html file to track when we last rendered any blogs. Any
+# blog entry (*.txt) file newer than this file will get rebuilt into HTML
+# I'm not sure if there's any way to do this without an extra file?
 #
-# Regenerate all changed blog_entries
-# $(DEST)/%.html: blog_entries/%.txt
-# 	python render_blog.py $<
+# This has a problem though: if we update a template file, all blog entries
+# need to be rebuilt, but they also can't go in the argument list for
+# render_blog.py
+#
+# for now I'm going to leave this here but not use it
+.blog_html: $(BLOG_ENTRIES)
+	python render_blog.py $$(grep *.txt $?)
+	touch .blog_html
 
 deploy:
 	rsync -az --delete -e "ssh -i $$HOME/.ssh/billmill.org.key" --safe-links --exclude '.git' build/ root@billmill.org:/var/www/html/
