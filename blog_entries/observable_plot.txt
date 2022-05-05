@@ -1,5 +1,5 @@
 Working with Observable Plot
-# time 05-01-22 12:00
+#time 05-01-22 12:00
 <!-- is there any way to wait for scripts loaded in the body to load? -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
