@@ -1,10 +1,8 @@
 import { extent, max, min } from "d3-array";
 import { json } from "d3-fetch";
-import { geoPath } from "d3-geo";
 import { scaleLog } from "d3-scale";
 import { interpolateBlues } from "d3-scale-chromatic";
 import { select } from "d3-selection";
-import { feature } from "topojson-client";
 
 states = {
   AK: { name: "Alaska", key: "AK" },
