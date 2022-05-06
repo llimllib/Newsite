@@ -1,0 +1,66 @@
+Some tooltip options for d3
+#time 05-06-22 09:00
+#draft true
+<!--<script async src="http://cdn.billmill.org/static/blog/bundle_d3_with_esbuild/bundle.js"></script>-->
+<script async src="http://127.0.0.1:8001/bundle.js"></script>
+
+<p>It's always been a bit odd to me that d3 doesn't have a native way to help you with tooltips, but I've come to an understanding with it. I think the reason it hasn't been added to the library is just that "tooltip" is actually quite a flexible term, and actually represents quite a lot of options.
+
+<h2>SVG Titles</h2>
+
+<p>The simplest option is to add SVG <code class="inline">title</code> attributes to your SVG.
+
+<p>To add them to <a href="bundle_d3_with_esbuild.html">yesterday's map</a>, we can just tack them onto the group we created to hold the state rectangle:
+
+<code lang="js">
+statesg.append("title").text(d => d.name);
+</code>
+
+<p>Which results in an SVG group for a square that looks like this:
+
+<div>
+<code lang="html">
+<g>
+  <rect x="838.75" y="0" width="72.25" height="72.25" state="Maine" fill="rgb(132, 187, 219)">
+  </rect>
+  <text x="874.875" y="36.125" fill="white" style="text-anchor: middle;" dominant-baseline="central">
+    ME
+  </text>
+  <title>ME</title>
+</g>
+</code>
+</div>
+
+<!-- code samples are floated left (see css for why) so this doesn't look as nice as it should... probably should improve that at some piont -->
+<p class="tip"><em>d3 debugging tip</em>: Remember that with d3 you're creating DOM elements and binding them to data! When you're confused about what happened, check the DOM with your browser's inspector and try to connect it to your code.
+
+<p>If you hover over a square for a second in the map below, your browser will (probably) show you a tooltip with the state's full name.
+
+<div id="map" style="margin-top: 40px; margin-bottom: 40px"></div>
+
+<p>The title attribute is probably important for accessibility, but honestly that's a topic I know very little about - I hope to examine it in a future post.
+
+<p>As a tooltip, it leaves something to be desired. The browser waits a while to display it, and you don't have much control over how it looks.
+
+<h2>SVG elements</h2>
+
+<p>Since we're already creating an SVG, one way to make tooltips is just to do normal d3 things like add an SVG element on mouse over and remove it on mouse out.
+
+<p class="tip">Instead of literally using <em>mouseenter</em> and <em>mouseout</em>, we can use <a href="https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent">PointerEvent</a>s like <em>pointerenter</em> and <em>pointerleave</em> to handle touch devices as well</p>
+
+<p>Mike Bostock demonstrates this pattern <a href="https://observablehq.com/@d3/line-with-tooltip">here</a>, and we can adapt it to our map.
+
+<p>First we'll modify our SVG to handle <code class="inline">pointerenter</code>, <code class="inline">pointermove</code> and <code class="inline">pointerleave</code> events
+
+<code lang="js">
+const svg = select(target)
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("viewBox", [0, 0, width, height])
+  .attr("style", "width: 100%; height: auto; height: intrinsic;")
+  .on("pointerenter pointermove", enter)
+  .on("pointerleave", leave);
+</code>
+
+<div id="map2" style="margin-top: 40px; margin-bottom: 40px"></div>

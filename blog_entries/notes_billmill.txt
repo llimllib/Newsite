@@ -1,0 +1,17 @@
+Introducing notes.billmill.org
+#time 05-06-22 16:00
+<p>For the past few months, I've been keeping notes in <a
+href="https://obsidian.md/">Obsidian</a>, and I decided that I wanted to share
+them; mostly for my own reference, but also in case they're useful to anybody
+else.
+
+<p>Thus <a href="https://notes.billmill.org">notes.billmill.org</a> was born.
+
+<p>A feature I really enjoy about Obsidian is that it stores documents as folders of markdown files, so that should I ever decide to leave the app, all my notes can follow me to whatever I use next.
+
+<p>That feature also makes it easy to do what I've done with <a href="https://notes.billmill.org">notes.billmill.org</a> - write a simple program that goes through all my notes files and publishes them as HTML.
+
+<p>You can find the <a href="https://github.com/llimllib/obsidian_notes/">code
+for publishing the site</a> on github, but I don't think it is likely to be too
+valuable to anybody but myself. The site is published on a highly technical
+schedule of "whenever I decide to run <span class="highlight inline">make publish</span>".
