@@ -24,7 +24,11 @@ def render_posts(posts):
     ).read()
 
     for f in posts:
-        title, _, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
+        title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
+
+        if "draft" in meta:
+            print(f"Not publishing draft: {title}")
+            continue
 
         timestr = strftime("%b %d, %Y", time_tuple)
 
