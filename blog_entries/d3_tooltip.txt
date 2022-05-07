@@ -1,10 +1,15 @@
 Some tooltip options for d3
-#time 05-06-22 09:00
-#draft true
-<!--<script async src="http://cdn.billmill.org/static/blog/bundle_d3_with_esbuild/bundle.js"></script>-->
-<script async src="http://127.0.0.1:8001/bundle.js"></script>
+#time 05-07-22 10:00
+<script async src="http://cdn.billmill.org/static/blog/tooltip/bundle.js"></script>
 
 <p>It's always been a bit odd to me that d3 doesn't have a native way to help you with tooltips, but I've come to an understanding with it. I think the reason it hasn't been added to the library is just that "tooltip" is actually quite a flexible term, and actually represents quite a lot of options.
+
+<p>In this post I'll add tooltips to the <a href="https://billmill.org/d3_grid_choropleth.html">grid choropleth map</a> I created in a previous post in three different ways; with SVG titles, with SVG text, and with HTML elements.
+
+<p class="tip">I'm not an expert on SVG, I'm mostly just poorly altering Mike
+Bostock's published code. I hope that I can give useful demonstrations and
+helpful explanations, but if you see something that's wrong or could be
+improved please <a href="mailto:bill@billmill.org">contact me</a>!
 
 <h2>SVG Titles</h2>
 
@@ -31,36 +36,164 @@ statesg.append("title").text(d => d.name);
 </code>
 </div>
 
-<!-- code samples are floated left (see css for why) so this doesn't look as nice as it should... probably should improve that at some piont -->
-<p class="tip"><em>d3 debugging tip</em>: Remember that with d3 you're creating DOM elements and binding them to data! When you're confused about what happened, check the DOM with your browser's inspector and try to connect it to your code.
+<!-- code samples are floated left (see css for why) so this doesn't look as
+  nice as it should... probably should improve that at some piont -->
+<p class="tip"><em>d3 debugging tip</em>: Remember that with d3 you're creating
+DOM elements and binding them to data! When you're confused about what
+happened, check the DOM with your browser's inspector and try to connect it to
+your code.
 
-<p>If you hover over a square for a second in the map below, your browser will (probably) show you a tooltip with the state's full name.
+<p>If you hover over a square for a second in the map below, your browser will
+(probably) show you a tooltip with the state's full name.
 
 <div id="map" style="margin-top: 40px; margin-bottom: 40px"></div>
 
-<p>The title attribute is probably important for accessibility, but honestly that's a topic I know very little about - I hope to examine it in a future post.
+<p>The title attribute is probably important for accessibility, but honestly
+that's a topic I know very little about - I hope to examine it in a future
+post.
 
-<p>As a tooltip, it leaves something to be desired. The browser waits a while to display it, and you don't have much control over how it looks.
+<p>As a tooltip, it leaves something to be desired. The browser waits a while
+to display it, and you don't have much control over how it looks.
 
 <h2>SVG elements</h2>
 
-<p>Since we're already creating an SVG, one way to make tooltips is just to do normal d3 things like add an SVG element on mouse over and remove it on mouse out.
+<p>Since we're already creating an SVG, one way to make tooltips is just to do
+normal d3 things like add an SVG element on mouse over and remove it on mouse
+out. Buckle up for this one
 
-<p class="tip">Instead of literally using <em>mouseenter</em> and <em>mouseout</em>, we can use <a href="https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent">PointerEvent</a>s like <em>pointerenter</em> and <em>pointerleave</em> to handle touch devices as well</p>
+<p class="tip">Instead of literally using <em>mouseenter</em> and
+<em>mouseout</em>, we can use <a
+href="https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent">PointerEvent</a>s
+like <em>pointerenter</em> and <em>pointerleave</em> to handle touch devices as
+well</p>
 
-<p>Mike Bostock demonstrates this pattern <a href="https://observablehq.com/@d3/line-with-tooltip">here</a>, and we can adapt it to our map.
-
-<p>First we'll modify our SVG to handle <code class="inline">pointerenter</code>, <code class="inline">pointermove</code> and <code class="inline">pointerleave</code> events
-
-<code lang="js">
-const svg = select(target)
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height)
-  .attr("viewBox", [0, 0, width, height])
-  .attr("style", "width: 100%; height: auto; height: intrinsic;")
-  .on("pointerenter pointermove", enter)
-  .on("pointerleave", leave);
-</code>
+<p>Mike Bostock demonstrates this pattern <a
+href="https://observablehq.com/@d3/line-with-tooltip">here</a>,
+and we can adapt it to our map. Roll over or tap the states to see a tooltip:
 
 <div id="map2" style="margin-top: 40px; margin-bottom: 40px"></div>
+
+<p>First we'll create a tooltip node in our SVG, that we can use to contain all
+the SVG elements we'll create, so that we can easily hide them on <span
+class="highlight inline">pointerleave</span>. I've set <span class="highlight
+inline">pointer-events: none</span> on it so that if you move your mouse over
+the tooltip box, the SVG will fire enter and leave events on the map rather
+than on your tooltip element.
+
+<code lang="js">
+const tooltip = svg
+  .append("g")
+  .attr("class", "tooltip")
+  .style("pointer-events", "none");
+</code>
+
+<p>Now we have a tooltip container, and the job is to handle pointer events.
+Rather than break it down into little chunks, I've annotated the source.
+
+<code lang="js">
+// attach pointer handlers to each state
+states = svg.selectAll("g.state")
+  .on("pointerenter pointermove", (evt) => {
+    // get the coordinates of the pointer event, relative to our SVG
+    [mouseX, mouseY] = pointer(evt);
+
+    // get the state data and generate a message to display. Format the
+    // number nicely
+    const target = select(evt.target).datum(),
+      name = target.name,
+      pop = target.population,
+      msg = `${name}\npopulation: ${format(",")(pop)}`,
+      padding = 4;
+
+    // re-display the tooltip if it was hidden
+    tooltip.style("display", null);
+
+    // Create a rectangle to serve as the tooltip background - we will set
+    // its height and width later, after we have created the tooltip text and
+    // can get its width. We need to add it to the SVG first so that it gets
+    // displayed behind the tooltip
+    const bg = tooltip
+      .selectAll("rect")
+      .data([,])
+      .join("rect")
+      .attr("fill", "#ffffff")
+      .attr("fill-opacity", "0.9");
+
+    // Create the tooltip text element. We use multiple <tspan> elements
+    // because SVG text elements do not support line breaks, so each line of
+    // text gets a separate <tspan> within the <text> element
+    const txt = tooltip
+      .selectAll("text")
+      .data([,])
+      .join("text")
+      .attr("dominant-baseline", "central")
+      .call(text => text.selectAll("tspan")
+        .data(msg.split(/\n/))
+        .attr("fill", "black")
+        .style("text-anchor", "middle")
+        .join("tspan")
+          .attr("x", mouseX)
+          .attr("y", (_, i) => mouseY + 30*i)
+          .text(d => d))
+
+    // Get the bounding box of the text node we created, and set the
+    // background rectangle's size appropriately
+    const bbox = txt.node().getBBox(),
+      width = bbox.width + padding * 2,
+      height = bbox.height + padding * 2;
+    bg.attr("height", height)
+      .attr("width", width)
+      .attr("x", mouseX - (width/2))
+      .attr("y", mouseY - (height/4));
+  })
+  .on("pointerleave", (evt) => {
+    // hide the tooltip when the pointer leaves the target
+    tooltip.style("display", "none");
+  })
+</code>
+
+<p>Phew! That works, but it's surprisingly involved. Laying out text in <span class="highlight inline">&lt;tspan&gt;</span> elements is a pain, and we also have to take into account that the tooltip might exceed the boundaries of our SVG and get cut off.
+
+<p>If you show the tooltip over Rhode Island or Alaska, you'll probably see that part of the tooltip gets cut off; if we were to improve this code we'd have to adjust the location of the tooltip depending on which border of the SVG we were close to. It's not incredibly hard to do, but the complexity really starts adding up.
+
+<h2>HTML elements</h2>
+
+<p>My favorite technique for using tooltips is using an HTML element rather than putting the tooltips in SVG. With this style of tooltips, you can style your text with HTML and the tooltips can exceed the boundaries of the SVG, which can make them a bit less complex. (You still have to deal with the boundaries of your web page, of course).
+
+<div id="map3" style="margin-top: 40px; margin-bottom: 40px"></div>
+
+<p>This one is a lot simpler; make an absolutely positioned <span class="highlight inline">div</span> to hold your tooltip, and set it to <span class="highlight inline">display: none</span> initially.
+
+<code lang="js">
+const tooltipdiv = select("#map")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("display", "none")
+  .style("background", "rgba(69,77,93,.9)")
+  .style("border-radius", ".2rem")
+  .style("color", "#fff")
+  .style("padding", ".6rem")
+  .style("position", "absolute")
+  .style("text-overflow", "ellipsis")
+  .style("white-space", "pre")
+  .style("line-height", "1em")
+  .style("z-index", "300");
+</code>
+
+<p>Then on <span class="highlight inline">pointerenter</span> and <span class="highlight inline">pointermove</span>, set the position and message of the tooltip and unhide it.
+
+<code lang="js">
+states = svg.selectAll("g.state")
+  .on("pointerenter pointermove", (evt) => {
+    const target = select(evt.target).datum();
+    tooltip
+      .style("display", null)
+      .html(`${target.name}<br>population: ${format(",")(target.population)}`)
+      .style("top", evt.pageY - 10 + "px")
+      .style("left", evt.pageX + 10 + "px");
+  })
+  .on("pointerleave", (evt) => {
+    // hide the tooltip
+    tooltip.style("display", "none");
+  })
+</code>
