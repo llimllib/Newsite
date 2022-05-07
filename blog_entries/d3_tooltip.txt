@@ -1,6 +1,6 @@
 Some tooltip options for d3
 #time 05-07-22 10:00
-<script async src="http://cdn.billmill.org/static/blog/tooltip/bundle.js"></script>
+<script async src="https://cdn.billmill.org/static/blog/tooltip/bundle.js"></script>
 
 <p>It's always been a bit odd to me that d3 doesn't have a native way to help you with tooltips, but I've come to an understanding with it. I think the reason it hasn't been added to the library is just that "tooltip" is actually quite a flexible term, and actually represents quite a lot of options.
 
