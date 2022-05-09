@@ -1,0 +1,74 @@
+Links for the week
+#time 05-08-22 22:30
+
+<ul class="spaciouslist">
+    <li>The always-excellent Eli Bendersky <a
+    href="https://eli.thegreenplace.net/2022/a-faster-lexer-in-go/">wrote about
+    speeding up a lexer he's written in go</a>, and the tradeoffs one can make
+    for various speedups.
+
+    <li><a href="https://encore.dev/blog/testscript-hidden-testing-gem">This
+    article</a> about <a
+    href="https://pkg.go.dev/github.com/rogpeppe/go-internal/testscript">Testscript</a>,
+    a tool the go team uses to test the go interpreter (<a
+    href="https://github.com/golang/go/blob/0ebd5a8de05823109263bef31b38be8c29d2cd54/src/cmd/go/testdata/script/test_example_goexit.txt">example</a>),
+    now released as an importable package.
+
+    <li><a
+    href="https://notes.billmill.org/synthesizers/Ableton_learning_synths.html">Learning
+    Synths</a> from ableton. Looks interesting, I haven't done the tutorial yet
+    but the <a
+    href="https://learningsynths.ableton.com/en/playground">playground</a> is
+    plenty fun all by itself
+
+    <li><a
+    href="https://apanalytics.shinyapps.io/pareto/">Pareto exploration</a> is a
+    neat visualization of NBA games on various efficency frontiers, and the
+    concept of a Pareto game was new to me.
+
+    <li><a
+    href="https://ciechanow.ski/mechanical-watch/">Mechanical Watch</a>, a
+    beautiful interactive explanation of how a mechanical watch works, all done
+    in hand-coded WebGL
+
+    <li>I discovered the <a
+    href="https://r-graph-gallery.com/index.html">R Graph Gallery</a>. R isn't
+    my thing, but there's lots of nice visualizations and thorough explanation
+    of how to make them in here.
+
+    <li>The <a
+    href="https://www.developer.tech.gov.sg/singapore-government-tech-stack/overview/index.html">Singapore
+    government tech stack</a> is interesting, and rhymes with the work I'm
+    trying to do with the US government in mind right now
+
+    <li><a
+    href="https://www.hytradboi.com/2022/ultorg-a-user-interface-for-relational-databases">This
+    presentation</a> on ultorg, a concept UI for database exploration and user
+    interfaces, is very cool.
+
+    <li>A <a
+    href="https://manuelclaeysbouuaert.be/projects/ferrargis.html">very cool
+    project</a> to use QGis to style modern maps similarly to some classic 18th
+    century maps
+
+    <li><a
+    href="https://www.adriancooney.ie/blog/web-scraping-via-javascript-heap-snapshots">Web
+    scraping via heap snapshots</a> is a very cool method for defeating sites
+    (like facebook or twitter) that intentionally obfuscate their HTML to
+    defeat scraping &emdash; dump the browser's memory and pull objects from it
+    instead of using the DOM.
+</ul>
+
+<h2>Music</h2>
+<ul>
+    <li>I continued enjoying <a href="https://www.youtube.com/watch?v=7tOmZd2cgIg">My Analog Journal</a>'s mix videos
+    <li><a href="https://www.youtube.com/watch?v=uAPUkgeiFVY">Kendrick Lamar</a> has a new song out
+    <li>Enjoyed <a href="https://open.spotify.com/album/2BeEXKn0ecWhwxOftmUZhy?si=IxZeFJ3wSc6aRJ1uKeoB_g">this Keytranada-produced</a> album by IDK, whom I hadn't heard of before
+    <li>Jose Gonzalez has a <a href="https://open.spotify.com/album/6FtOADddclxzVHrpqCe79m?si=LDdogUXaRZanxHaK7A4obQ">new album</a> that I like
+</ul>
+
+<h2>TV</h2>
+<ul>
+    <li>I liked <a href="https://www.imdb.com/title/tt11280740/">Severance</a>, just like seemingly everyone else.
+    <li>We're halfway through <a href="https://www.imdb.com/title/tt8888462/">Pachinko</a>, based on the excellent book, and enjoying it.
+</ul>
