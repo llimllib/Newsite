@@ -146,8 +146,12 @@ em.caption {
 }
 
 ul {
-    list-style: disc inside;
+    list-style: disc outside;
     line-height: 1.6em;
+}
+
+ul.spaciouslist li {
+    margin-bottom: 1.3em;
 }
 
 img.resize {
