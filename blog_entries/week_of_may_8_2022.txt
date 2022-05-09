@@ -55,7 +55,7 @@ Links for the week
     href="https://www.adriancooney.ie/blog/web-scraping-via-javascript-heap-snapshots">Web
     scraping via heap snapshots</a> is a very cool method for defeating sites
     (like facebook or twitter) that intentionally obfuscate their HTML to
-    defeat scraping &emdash; dump the browser's memory and pull objects from it
+    defeat scraping &mdash; dump the browser's memory and pull objects from it
     instead of using the DOM.
 </ul>
 
