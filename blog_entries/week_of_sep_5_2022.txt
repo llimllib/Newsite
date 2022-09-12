@@ -14,7 +14,8 @@ Links for the Week of September 5
     <li><a href="https://github.com/bufbuild/connect-go">connect-go</a> looks like a neat RPC library, aiming for something similar to but simpler in important ways than gRPC. <a href="https://connect.build/">site here</a>
     <li>The go team released a <a href="https://go.dev/security/vuln/">tool to check for vulnerabilities in your dependencies</a>
     <li>Marc Brooker wrote a very interesting blog post <a href="https://brooker.co.za/blog/2022/09/02/ecdf.html">suggesting we use cumulative density graphs instead of histograms</a> for displaying metrics graphics. I look forward to giving this a try the next time I have some metrics to display
-    <li>Somebody made a <a href="https://github.com/divamgupta/diffusionbee-stable-diffusion-ui">simple gui for Stable Diffusion</a> that makes AI image generation a click and install process
+    <li>Divam Gupta made a <a href="https://github.com/divamgupta/diffusionbee-stable-diffusion-ui">simple gui for Stable Diffusion</a> that makes AI image generation a click and install process
+    <li>Jonathan Whitaker wrote a <a href="https://colab.research.google.com/drive/1dlgggNa5Mz8sEAGU0wFCHhGLFooW_pf1?usp=sharing">colab notebook</a> to explain how stable diffusion works
     <li>youtube-dl has a <a hrf="https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/jsinterp.py">Javascript interpreter done in 870 lines of code</a>. Lovely stuff
     <li>The US Congress has <a href="https://api.congress.gov/">an API</a>!
     <li>Health insurers published <a href="https://www.dolthub.com/blog/2022-09-02-a-trillion-prices/">close to a trillion prices</a> to comply with price transparency regulations and Alec Stein is looking for help in trying to make sense of them
