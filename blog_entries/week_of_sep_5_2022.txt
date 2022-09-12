@@ -1,0 +1,34 @@
+Links for the Week of September 5
+#time 09-12-22 10:30
+
+<ul class="spaciouslist">
+    <li><pre>http://http://http://@http://http://?http://#http://</pre> is <a href="https://daniel.haxx.se/blog/2022/09/08/http-http-http-http-http-http-http/">a legitimate URL</a>
+    <li>I figured out how <a href="https://github.com/llimllib/wasm_sqlite_with_stats/tree/build-fiddle">to build sqlite fiddle with a sqlite extension</a> and wrote up notes alongside code. I learned a lot about compiling C into WASM along the way, and SQLite remains a joy to work with - the aggregate C file is such a great idea.
+    <li>Along with help from a sql.js developer, I <a href="https://github.com/sql-js/sql.js/pull/529">added custom aggregate function support</a> to the library. With this, you can define custom aggregate functions in javascript, making it easy to extend SQLIte without having to do tricks to compile in extensions.
+    <li>Ben Johnson continued his excellent series on the internals of SQLite and wrote about <a href="https://fly.io/blog/sqlite-virtual-machine/">how SQLite parses queries</a>
+    <li>Hugo Landau <a href="https://www.devever.net/~hl/mildlydynamic">laments the loss of mildly dynamic websites</a>. Amen!
+    <li>There is <a href="https://github.com/golang/go/discussions/54763">a proposal</a> to bring levelled logging to the golang standard library. I'll be interested to see how it compares to zerolog et al. Like many others, I have written and abandoned my own levelled logging wrapper around the stdlib.
+    <li>Raph Levien <a href="https://raphlinus.github.io/curves/2022/09/09/parallel-beziers.html">demonstrates and explains</a> a new best technique for creating parallel curves of cubic Bézier paths. I worked a bit about that in the past <a href="https://billmill.org/sol_1136.html">here</a> when making Sol LeWitt drawings and have been following Raph's work that helped me a ton since.
+    <li>I've been trying to work my way through the <a href="https://www.amazon.com/Chess-5334-Problems-Combinations-Games/dp/1579125549/">Polgár chess problems</a>, and <a href="https://danielmoore.us/chess-puzzles">this little site</a> that lets you play them online is handy
+    <li><a href="https://github.com/bufbuild/connect-go">connect-go</a> looks like a neat RPC library, aiming for something similar to but simpler in important ways than gRPC. <a href="https://connect.build/">site here</a>
+    <li>Speaking of logging, I revisited <a href="https://stripe.com/blog/canonical-log-lines">this article about using canonical log lines</a>, the practice of each service request emitting a single wide long line when it completes. I wish go logging libraries supported the pattern of accumulating log bits as it proceeded, then emitting them at the end, better.
+    <li>The go team released a <a href="https://go.dev/security/vuln/">tool to check for vulnerabilities in your dependencies</a>
+    <li>Marc Brooker wrote a very interesting blog post <a href="https://brooker.co.za/blog/2022/09/02/ecdf.html">suggesting we use cumulative density graphs instead of histograms</a> for displaying metrics graphics. I look forward to giving this a try the next time I have some metrics to display
+    <li>Somebody made a <a href="https://github.com/divamgupta/diffusionbee-stable-diffusion-ui">simple gui for Stable Diffusion</a> that makes AI image generation a click and install process
+    <li>youtube-dl has a <a hrf="https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/jsinterp.py">Javascript interpreter done in 870 lines of code</a>. Lovely stuff
+    <li>The US Congress has <a href="https://api.congress.gov/">an API</a>!
+    <li>Health insurers published <a href="https://www.dolthub.com/blog/2022-09-02-a-trillion-prices/">close to a trillion prices</a> to comply with price transparency regulations and Alec Stein is looking for help in trying to make sense of them
+    <li>The passing of Richard Cook brought <a href="https://how.complexsystems.fail">how.complexsystems.fail</a> back to my attention. Excellent work and I'm sad to hear of his passing.
+</ul>
+
+<h2>Music</h2>
+<ul class="spaciouslist">
+  <li>I enjoyed <a href="https://www.youtube.com/watch?v=gsaZRcL-OTQ">JID's tiny desk concert</a>
+  <li>I hadn't listened to <a href="https://www.youtube.com/watch?v=MuWkZsISjsQ">Charlie Parker</a> in a long while and it was a pleasure to go back to it
+</ul>
+
+<h2>TV</h2>
+<ul class="spaciouslist">
+  <li>My wife and I started <a href="https://www.imdb.com/title/tt11198330/">House of Dragons</a> but didn't enjoy it very much so we're quitting on it
+  <li>We started on <a href="https://www.imdb.com/title/tt6704972/">Underground Railroad</a> instead; we're not far enough in to make any judgement
+</ul>

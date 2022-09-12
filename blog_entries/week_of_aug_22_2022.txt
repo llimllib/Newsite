@@ -1,0 +1,34 @@
+Links for the Week of August 22
+#time 08-29-22 10:30
+
+    <h2>Stable Diffusion</h2>
+    <p>There was a lot of noise around the open source <a href="https://github.com/CompVis/stable-diffusion/">Stable Diffusion</a> image generation model this week. For kicks, I <a href="https://notes.billmill.org/programming/image_generation/Stable_Diffusion.html">followed some instructions from the web</a> to install it on my Macbook, but had trouble getting it to work well.
+    <p>I'm very sympathetic to views like these, that Dall-E (and other image generation tools) unfairly abuse the work of human creators for profit:
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Early days, but this sums up a lot of my concerns. <a href="https://t.co/DaYj2RISOA">pic.twitter.com/DaYj2RISOA</a></p>&mdash; Kyle T Webster (@kyletwebster) <a href="https://twitter.com/kyletwebster/status/1550984156133429251?ref_src=twsrc%5Etfw">July 23, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <p>Similar concerns are why I don't like <a href="https://github.com/features/copilot">github's copilot</a> - it disregards the explicit wishes of the authors of the software it's trained on for corporate profit.
+    <p>This morning, Simon Willison posited that someone with my sympathies is an <a href="https://simonwillison.net/2022/Aug/29/stable-diffusion/#ai-vegan">AI vegan</a>. I understand where he's coming from, but it feels to me like an attempt to marginalize (an admittedly marginal!) viewpoint. It chooses not to engage with the people saying "it's unethical to do that!" by framing it as a natural idea that there is always that wacky group saying that what we're doing is unethical and we can safely ignore them.
+    <p>That said, I eat meat! And I do try to both listen to but ignore what vegans say, so the metaphor definitely has power to me.
+    <p>Maybe I will end up just getting over my ethical concerns and using the human-creator-mashup tools. Some of the work coming out of stable diffusion is neat (although I find it way less groundbreaking than the people who are really excited about it...) and I'm even occasionally jealous of github copilot.
+
+    <h2>Links</h2>
+
+<ul class="spaciouslist">
+  <li>A <a href="https://huggingface.co/datasets">nice collection of useful datasets</a> and a <a href="https://github.com/huggingface/datasets">python library</a> that makes downloading most of them a one-liner</li>
+  <li>How to <a href="https://cloudfour.com/thinks/mac-voiceover-testing-the-simple-way/">test your apps with VoiceOver</a>. One of the best talks I ever went to was a short talk by a blind computer user where he showed us how he used his computer. (I'm trying to avoid calling it "eye-opening"...)</li>
+  <li>A funny Dan Hon <a href="https://twitter.com/hondanhon/status/1561840766212837378">twitter thread</a> on legacy software on the Star Trek enterprise</li>
+  <li>Ben Johnson <a href="https://fly.io/blog/sqlite-internals-wal/">continues his excellent series</a> on SQLite internals with a post explaining how the WAL works.</li>
+  <li>I have been studiously ignoring NixOS so far because it feels like it tends towards my worst perfectionist instincts, but this week I <a href="https://notes.billmill.org/computer_usage/nix_shell/first_steps.html">started</a> <a href="https://notes.billmill.org/computer_usage/nix_shell/flakes.html">messing</a> with it again, inspired by <a href="https://twitter.com/hazelweakly/status/1562640644816121856">this tweet thread</a>. I'm intrigued by <a href="https://github.com/jetpack-io/devbox">devbox</a>, which seems like an attempt at a UI layer on top of it, though I've not yet played with it and it seems pretty alpha.</li>
+  <li>Here's <a href="https://lichess.org/blog/U4sjakQAAEAAhH9d/how-training-puzzles-are-generated">how lichess puzzles are generated</a> (or were, as of 2014 - I couldn't find how they're currently generated in a brief search)</li>
+  <li>A <a href="https://www.fast.ai/2022/08/25/jupyter-git/">tool that cleverly merges jupyter notebook files</a> to ease (make possible?) collaboration on them</li>
+  <li><a href="https://colorandcontrast.com/#/">An interactive guide to color & contrast</a> seems like a very cool online book on all sorts of color theory topics.</li>
+  <li>I <a href="https://notes.billmill.org/computer_usage/google_cloud/creating_a_service_account.html">wrote up complete notes</a> for doing a mundane task - setting up a google cloud service account - and was struck by just how many steps there are for even a simple task.</li>
+</ul>
+
+  <h2>Music</h2>
+  <ul>
+    <li>The new <a href="https://open.spotify.com/album/0rEbmIQjHTKzKraH4UqiDy?si=8b1a4d6b700e44be">Black Thought & Danger Mouse</a> and <a href="https://open.spotify.com/album/3QVjpIxcksDkJmOnvlOJjg?si=c63db1888f3140d6">JID</a> albums are really good.</li>
+    <li>The album <a href="https://open.spotify.com/album/2TgXc0KeZDRjb9AsnSED7M?si=e0e2cf8b1a4e42c5">"Get Fucked"</a> by The Chats is enjoyably straightforward rock and roll</li>
+  </ul>
+
+  <h2>TV</h2>
+  <p>This week we finished <a href="https://www.imdb.com/title/tt14192504/">"We Own This City"</a>, David Simon's dramatization of the GTTF in Baltimore. It was far below the quality of The Wire (what isn't), but it was good. Anything that puts more attention on the dire situation of Baltimore is a good thing.
