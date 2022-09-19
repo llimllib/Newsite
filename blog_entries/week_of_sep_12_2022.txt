@@ -1,0 +1,29 @@
+Links for the Week of September 12
+#time 09-19-22 13:00
+
+<ul class="spaciouslist">
+  <li>This week <a href="https://twitter.com/BillDemirkapi/status/1570602097640607744">Uber got owned</a>, which prompted a lot of thinking about authentication and authorization
+  <li>Xe Iaso saw that and made the case that <a href="https://xeiaso.net/blog/push-2fa-considered-harmful">push 2fa is considered harmful</a>. I think this is where corporations are going, but not sure it's ready yet for wide distribution. (And I'm ready for the "considered harmful" phrasing to be considered harmful...)
+  <li>Phil Eaton's <a href="https://github.com/multiprocessio/go-sqlite3-stdlib">go-sqlite3-stdlib</a> is an interesting project that provides a set of common golang functions for interacting with sqlite databases. Rather than relying on sqlean, they <a href="https://datastation.multiprocess.io/blog/2022-08-21-sqlite-limited-builtin-functions.html">chose to reimplement</a> and add on several other features as well.
+  <li>Tyler Langlois does some quality performance engineering to <a href="https://blog.tjll.net/reverse-proxy-hot-dog-eating-contest-caddy-vs-nginx/">measure caddy vs nginx</a>, specifically as reverse proxies. My general take from it: they came out close and it's pretty much a coin flip.
+  <li>Matt Holt, the caddy author, found <a href="https://github.com/caddyserver/caddy/pull/5042">a performance regression</a> from that post - metrics were causing too much overhead how they were implemented. I was impressed with the speed and responsiveness of caddy's developers.
+  <li>David R. MacIver wrote <a href="https://drmaciver.substack.com/p/how-to-think-about-estimation-strategy">part 2</a> of a series on estimation - I enjoyed this as well as <a href="https://consulting.drmaciver.com/estimation-series/">the other posts in the series</a> a lot.
+  <li>I like <a href="https://engineering.18f.gov/language-selection/">18f's document on language and framework selection</a>
+  <li>Aidan Steele wrote a <a href="https://twitter.com/__steele/status/1570208081296134145?s=20&t=CvELevoOgwfDzyqo1eDWmA">useful thread on AWS design patterns</a>
+  <li>Tom MacWright <a href="https://macwright.com/2022/09/14/zig-raytracer.html">ported a javascript ray tracer from javascript to zig</a>, and wrote a reflection on the port and also on the value of play
+  <li>Julia Evans drew an <a href="https://twitter.com/b0rk/status/1570060516839641092">excellent debugging manifesto comic</a>
+  <li>Jason Scott <a href="https://twitter.com/textfiles/status/1569701695877177347">reflects on the development of the internet</a>
+  <li>Robin Sloan wrote about <a href="https://www.robinsloan.com/notes/home-cooked-app/">creating an app strictly for friends and family</a>. I love this idea and wish it weren't so painful to do. Security balances against usefulness.
+  <li>Coda Hale wrote about <a href="https://codahale.com/work-is-work/">how work scales in organizations</a>
+  <li>Jacob Kaplan-Moss argues that <code>"a group of mediocre programmers working with a structure designed to produce quality will produce better software than a group of fantastic programmers working in a system designed with other goals."</code> in <a href="https://jacobian.org/2022/sep/9/quality-is-systemic/">Quality is Systemic</a>
+  <li>We all know that global variables are bad, but Forrest Smith <a href="https://www.forrestthewoods.com/blog/global-variables-are-evil-and-unsafe/">argues that they're even worse than we think</a>, and programming languages should make them harder to use than they already are
+  <li>Tim Morgan <a href="https://mpov.timmorgan.org/i-built-a-ruby-compiler/">wrote a ruby compiler</a>, and reflects on the process of building it and building software for personal joy
+</ul>
+
+<h2>Music</h2>
+<ul class="spaciouslist">
+  <li>Not sure why, but I listened to the Beatles a lot this week
+</ul>
+
+<h2>Book</h2>
+<p>This week I started reading <a href="https://www.manning.com/books/deep-learning-and-the-game-of-go">Deep Learning and the Game of Go</a> (<a href="https://github.com/maxpumperla/deep_learning_and_the_game_of_go/">github repo</a>). I created <a href="https://github.com/llimllib/deeplearning-go">a repository</a> with my implementations and notes about it. More on this later this week, hopefully.
