@@ -15,7 +15,7 @@ Links for the Week of September 12
   <li>Jason Scott <a href="https://twitter.com/textfiles/status/1569701695877177347">reflects on the development of the internet</a>
   <li>Robin Sloan wrote about <a href="https://www.robinsloan.com/notes/home-cooked-app/">creating an app strictly for friends and family</a>. I love this idea and wish it weren't so painful to do. Security balances against usefulness.
   <li>Coda Hale wrote about <a href="https://codahale.com/work-is-work/">how work scales in organizations</a>
-  <li>Jacob Kaplan-Moss argues that <code>"a group of mediocre programmers working with a structure designed to produce quality will produce better software than a group of fantastic programmers working in a system designed with other goals."</code> in <a href="https://jacobian.org/2022/sep/9/quality-is-systemic/">Quality is Systemic</a>
+  <li>Jacob Kaplan-Moss argues that "a group of mediocre programmers working with a structure designed to produce quality will produce better software than a group of fantastic programmers working in a system designed with other goals." in <a href="https://jacobian.org/2022/sep/9/quality-is-systemic/">Quality is Systemic</a>
   <li>We all know that global variables are bad, but Forrest Smith <a href="https://www.forrestthewoods.com/blog/global-variables-are-evil-and-unsafe/">argues that they're even worse than we think</a>, and programming languages should make them harder to use than they already are
   <li>Tim Morgan <a href="https://mpov.timmorgan.org/i-built-a-ruby-compiler/">wrote a ruby compiler</a>, and reflects on the process of building it and building software for personal joy
 </ul>
