@@ -53,6 +53,8 @@ def get_recent_entries(n: int) -> List[Entry]:
     for f in glob("blog_entries/*.txt"):
         url = basename(f[:-4] + ".html")
         title, meta, time_tuple, txt = parse_bloxsom(open(f, encoding="utf8"))
+        if "draft" in meta:
+            continue
         entries.append((time_tuple, title, txt, url, meta))
 
     # sort them by date descending
