@@ -2,7 +2,7 @@ Links for the Week of September 19
 #time 09-26-22 13:00
 
 <ul class="spaciouslist">
-  <li>The <a href="https://bytecodealliance.org/articles/wasmtime-1-0-fast-safe-and-production-ready">Wasmtime wasm runtime hit version 1.0</a>. I'm interested in the possibilities this offers for sandboxed and portable pplications in a variety of languages.</li>
+  <li>The <a href="https://bytecodealliance.org/articles/wasmtime-1-0-fast-safe-and-production-ready">Wasmtime wasm runtime hit version 1.0</a>. I'm interested in the possibilities this offers for sandboxed and portable applications in a variety of languages.</li>
   <li>Ceej Silverio's <a href="https://twitter.com/ceejbot/status/1573105683116879875">short thread</a> about how difficult it is to add engineers at the start of a project matched thoughts I've been having on the topic lately</li>
   <li>Ben Johnson <a href="https://fly.io/blog/introducing-litefs/">released LiteFS</a>, a system that distributes SQLite writes to a leader, by writing a Fuse filesystem to distribute SQLite writes. The <a href="https://github.com/superfly/litefs/blob/1131873151a7a0b67e49b884b346c9e5a2a522f1/docs/ARCHITECTURE.md">ARCHITECTURE</a> doc is short and worthwhile reading.</li>
   <li>Simon Willison <a href="https://twitter.com/simonw/status/1572285367382061057">started a very interesting twitter thread</a> by asking people what tools they use to process CSV files of varying sizes. I updated my <a href="https://notes.billmill.org/data_analytics/CSV_tools/csv_tools.html">csv tools</a> survey with some new tools from reading the responses.</li>
@@ -12,6 +12,7 @@ Links for the Week of September 19
   <li><a href="https://github.com/Vexu/arocc/">A c compiler in zig</a> from Veikka Tuominen</li>
   <li>Tsoding is working on a <a href="https://github.com/tsoding/olive.c">single-file graphics library in C</a>. The idea is that it can be compiled down to WASM for web display, SDL for native display, or whatever target you can think of. <a href="https://tsoding.org/olive.c/">demos here</a></li>
   <li>Vincent Rischmann <a href="https://rischmann.fr/blog/virtual-tables-with-zig-sqlite">shows how you can use SQLite virtual tables</a> to expose an API to sqlite as if it were a database. He uses zig for his example.
+  <li>Dan Nguyen tests <a href="https://openai.com/blog/whisper">OpenAI's new voice-to-text AI</a> against <a href="https://twitter.com/dancow/status/1572916995468963847">one of TV's finest-ever scenes</a> and it gives impressive results</li>
 </ul>
 
 <h2>Music</h2>
