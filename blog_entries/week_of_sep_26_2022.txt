@@ -1,0 +1,20 @@
+Links for the Week of September 26
+#time 10-03-22 17:00
+
+<ul class="spaciouslist">
+  <li>Simon Willison <a href="https://simonwillison.net/2022/Oct/1/software-engineering-practices/">lists some core engineering practices</a></li>
+  <li>I wrote <a href="https://github.com/llimllib/ytgif">a little tool</a> for turning youtube videos into gifs with <a href="https://ffmpeg.org/">ffmpeg</a> and <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a>. Short twitter thread about it <a href="https://twitter.com/llimllib/status/1575104258373918720">here</a></li>
+  <li>Casey Muratori makes the case that <a href="https://www.computerenhance.com/p/turns-are-better-than-radians">turns are better than radians</a></li>
+  <li>I've been considering giving the <a href="https://github.com/helix-editor/helix">helix editor</a> a serious try, but it's hard to even consider giving up my vim familiarity
+</ul>
+
+<h2>Music</h2>
+
+<ul class="spaciouslist">
+  <li>I listened to Hot Rats a lot this week, one of my favorite albums:
+
+    <p><iframe width="560" height="315" src="https://www.youtube.com/embed/RdU4FHH4FnE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>
+  <li>The Yeah Yeah Yeahs' new album is a fun jam
+
+    <p><iframe width="560" height="315" src="https://www.youtube.com/embed/ckM_TklU_AQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</ul>
