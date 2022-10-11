@@ -1,0 +1,25 @@
+Links for the Week of October 3
+#time 10-10-22 23:00
+
+<ul class="spaciouslist">
+    <li>I <a href="https://twitter.com/llimllib/status/1579292356343484419">learned a bit about writing C this weekend</a></li>
+    <li>Last year Richard Feldman gave <a href="https://www.youtube.com/watch?v=vzfy4EKwG_Y&feature=emb_title">a very neat talk</a> at Strange Loop about using reference counting to find palces where a compiler for an immutable language can silently perform mutation for performance gains.</li>
+    <li>Nikolay Dubina <a href="https://github.com/nikolaydubina/go-recipes">has collected</a> a "handy list of well-known and <em>lesser</em>-known tools for Go projects"</li>
+    <li>Raghu R wrote <a href="https://github.com/razetime/ngn-k-tutorial">this tutorial</a> for the k language, which I admire from afar. I aspire to go through this some day, but probably never will.</li>
+    <li>Jason Miller collected <a href="https://jasonformat.com/application-holotypes/">this list</a> of "Application Holotypes", an attempt to roughly categorize types of applications and the architectures appropriate to them.</li>
+    <li>QP Hou created <a href="https://github.com/roapi/roapi">roapi</a>, which "automatically spins up read-only APIs for static datasets without requiring you to write a single line of code." A very neat idea I don't have a direct use case for but I'll be looking for one.</li>
+    <li>I've known about <a href="https://rr-project.org/">rr</a> before, but I was reminded of it this week. It's a debugger that enables you to record the events that occur in an application execution and replay them - a practical <a href="https://en.wikipedia.org/wiki/Time_travel_debugging">time travel debugger</a>.</li>
+    <li>The supabase folks teamed up with "snaplet" to get <a href="https://www.snaplet.dev/post/postgresql-in-the-browser">postgresql running in the browser</a>. The neatest part of this trick is that they used <a href="https://github.com/copy/v86">v86</a> to run a whole linux VM in WASM to do so.</li>
+    <li>I <a href="https://twitter.com/llimllib/status/1578581742868275200">made</a> an <a href="https://github.com/llimllib/observable-plot-template">observable plot template repository</a> becauase I always have to re-learn how to create an npm app, and I wanted to be able to at least maintain that knowledge.</li>
+    <li>Fabien Geisen <a href="https://fgiesen.wordpress.com/2022/10/06/on-alphatensors-new-matrix-multiplication-algorithms/">explains the AlphaTensor Matrix Multiplcation paper</a></li>
+    <li><a href="https://www.scattered-thoughts.net/log/0028">A report</a> from Jamie Brandon on his attempt to write a SQL parser in Zig in one week. Dan Luu <a href="https://twitter.com/danluu/status/1576979534666420229">asked on twitter</a> what similar examples there are where somebody presents a project you can follow along with, which spanwed an interesting thread. I suggested <a href="https://twitter.com/llimllib/status/1577016099757232128">a few</a> examples, including <a href="https://www.youtube.com/playlist?list=PLU94OURih-CiP4WxKSMt3UcwMSDM3aTtX">Bitwise</a> by Per Vognsen, which is criminally under-rated.</li>
+</ul>
+
+<h2>Music</h2>
+
+<ul class="spaciouslist">
+    <li>Via this video of Hania Rani playing a gorgeous, bizarre, vertical piano before it goes to Nils Frahm's studio, I discovered her lovely piano work. ht <a href="https://twitter.com/timbray/status/1577892665185939456">Tim Bray</a>.
+    <p><iframe width="560" height="315" src="https://www.youtube.com/embed/c8veLuNmQbI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <li>New King Gizzard album this week! I love this extremely prolific and genre-hopping Aussie band. The new album is mostly in a jam-rock groove, which is not normal for them, but not being normal is normal for them. I like this album more than anything they've released in the last few years.
+    <p><iframe width="560" height="315" src="https://www.youtube.com/embed/ydeV1_8pM4o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</ul>
