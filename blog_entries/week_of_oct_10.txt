@@ -8,13 +8,15 @@ Links for the Week of October 10
   <li>I like <a href="https://driftingin.space/posts/plane">this idea</a> of per-document backends; it introduces a lot of complexities but also eases some of the problems of stateless web development for particular workloads. I have been thinking about workloads like this in combination with a site that uses many SQLite databases instead of one large relational data store.</li>
   <li><a href="https://remake.readthedocs.io/en/latest/#">remake</a> looks neat, a GNU Make-alike which "adds profiling, comprehensible tracing, extended error messages and a debugger". I love make, and this seems like a useful complementary tool</li>
   <li><a href="https://www.scratchapixel.com/">Scratchapixel</a> looks like an interesting series of computer graphics tutorials, which is a thing I love to collect but ultimately rarely have the time to mess around with. Aspirations though.</li>
-  <li>This week I learned about the <code>reveal_type</code> <a href="https://github.com/microsoft/pyright/blob/main/docs/type-concepts.md#debugging-inferred-types">function of pyright</a>, which made my debugging <a href="https://notes.billmill.org/programming/python/pyright.html">life easier</a></li>
+  <li>This week I learned about the <span class="highlight inline">reveal_type</span> <a href="https://github.com/microsoft/pyright/blob/main/docs/type-concepts.md#debugging-inferred-types">function of pyright</a>, which made my debugging <a href="https://notes.billmill.org/programming/python/pyright.html">life easier</a></li>
   <li><a href="https://www.postgresql.org/about/news/postgresql-15-released-2526/">postgresql 15 was released</a></li>
   <li><a href="https://obsidian.md/1.0">obsidian 1.0 was released</a>. Obsidian has been the first note-taking tool I've ever found simple and compelling enough to stick with, and I'm very happy with it.</li>
   <li>Enjoyed this <a href="https://twitter.com/CommonFateTech/status/1580449400580472832">Database alignment chart</a></li>
   <li>Greg Linares tells the story of <a href="https://twitter.com/Laughing_Mantis/status/1579550302172508161">exploits delivered on drones</a></li>
   <li>Warren Craddock tweeted a fascinating <a href="https://twitter.com/warren_craddock/status/1579532951624175616">tale of companies too obsessed with themselves to notice their own failures.</a> How do you dream big, but also stop when it's clear you have a fatal flaw?</li>
   <li>Russ Cox <a href="https://github.com/golang/go/discussions/56010">considers a big backwards-incompatible change</a> to go, to eliminate the <a href="https://github.com/golang/go/issues/20733">loop variable capture</a> problem.
+  <li>I <a href="https://llimllib.github.io/nbastats/teams/">created a diamond chart</a> of NBA team efficiencies and wrote <a href="https://twitter.com/llimllib/status/1580379876112052225">a little twitter thread about it</a>. Hopefully more on this soon.</li>
+  <li>I got a new work computer, so I created <a href="https://gist.github.com/llimllib/5f01219954e213ec57ae267008e702e5">a new version of my mac OS X installation script</a>.</li>
 </ul>
 
 <h2>Music</h2>
