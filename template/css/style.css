@@ -1,18 +1,18 @@
 pre {
-    display: inline;
-    font-size: 16px;
+  display: inline;
+  font-size: 16px;
 }
 
 p.tip {
-    margin: 30px;
-    padding: 10px;
-    background-color: #f0f0f0;
+  margin: 30px;
+  padding: 10px;
+  background-color: #f0f0f0;
 }
 
 .container {
-    margin-left: 20px;
-    max-width: 800px;
-    margin-bottom: 100px;
+  margin-left: 20px;
+  max-width: 800px;
+  margin-bottom: 100px;
 }
 
 /* we float code samples (pygments adds the "highlight" class) to the left so
@@ -20,141 +20,147 @@ p.tip {
  * same min-width as the container has max so that short code samples don't get
  * wrapped around */
 div.highlight {
-    float: left;
-    padding: 10px;
-    margin: 10px 0 20px 0;
-    min-width: 800px;
-    line-height: 1em;
+  float: left;
+  padding: 10px;
+  margin: 10px 0 20px 0;
+  min-width: 800px;
+  line-height: 1em;
 }
 
 span.highlight.inline {
-    padding: 4px;
-    background-color: #f0f0f0;
+  padding: 4px;
+  background-color: #f0f0f0;
 }
 
 body {
-    font: 20px Georgia,'Times New Roman',serif;
-    margin-top: 20px;
-    line-height: 1.6em;
+  font: 20px Georgia, "Times New Roman", serif;
+  margin-top: 20px;
+  line-height: 1.6em;
+}
+
+img {
+  max-width: 90%;
 }
 
 body.index {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 code {
-    background-color: #f0f0fc;
-    padding: 2px;
-    font-size: 14px;
+  background-color: #f0f0fc;
+  padding: 2px;
+  font-size: 14px;
 }
 
 blockquote {
-    padding: 10px;
-    background-color: #f8f8fc;
-    border-left: 3px solid #666;
-    line-height: 1.4em;
-    /* something */
+  padding: 10px;
+  background-color: #f8f8fc;
+  border-left: 3px solid #666;
+  line-height: 1.4em;
+  /* something */
 }
 
-a, a:visited {
-    color: black;
+a,
+a:visited {
+  color: black;
 }
 
 p a {
-    background-color: rgba(236, 236, 236, 0.52);;
+  background-color: rgba(236, 236, 236, 0.52);
 }
 
 h1 {
-    font: bold 24px Georgia,'Times New Roman',serif;
-    margin-bottom: 20px;
+  font: bold 24px Georgia, "Times New Roman", serif;
+  margin-bottom: 20px;
 }
 
 h2 {
-    display: block;
-    font: bold 22px Georgia,'Times New Roman',serif;
-    margin-top: 30px;
-    margin-bottom: 20px;
+  display: block;
+  font: bold 22px Georgia, "Times New Roman", serif;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 h3 {
-    margin-top: 20px;
-    font:  18px Georgia,'Times New Roman',serif,underline;
+  margin-top: 20px;
+  font: 18px Georgia, "Times New Roman", serif, underline;
 }
 
 h3 {
-    margin-top: 20px;
-    font:  18px Georgia,'Times New Roman',serif,underline;
-    font-style: italic;
+  margin-top: 20px;
+  font: 18px Georgia, "Times New Roman", serif, underline;
+  font-style: italic;
 }
 
 .blogdate {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font:  italic 16px Georgia,'Times New Roman',serif;
-    font-color: #888888;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font: italic 16px Georgia, "Times New Roman", serif;
+  font-color: #888888;
 }
 
 h4 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font:  italic 16px Georgia,'Times New Roman',serif;
-    font-color: #888888;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font: italic 16px Georgia, "Times New Roman", serif;
+  font-color: #888888;
 }
 
 p img {
-    margin-top: 30px;
-    margin-bottom: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 p {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 1.6em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 1.6em;
 }
 
 .content {
-    margin-left: 40px;
-    margin-top: 40px;
+  margin-left: 40px;
+  margin-top: 40px;
 }
 
 #headertxt {
-    display: block;
-    margin-top: 30px;
+  display: block;
+  margin-top: 30px;
 }
 
 .mainboxes {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .footer {
-    color: #777;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font:  12px Georgia,'Times New Roman',serif,underline;
+  color: #777;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font: 12px Georgia, "Times New Roman", serif, underline;
 }
 
-.footer a, .footer a:visited {
-    color: #777;
+.footer a,
+.footer a:visited {
+  color: #777;
 }
 
 em.caption {
-    font-size: 18px;
-    position: relative;
-    top: -20px;
-    left: 20px;
+  font-size: 18px;
+  position: relative;
+  top: -20px;
+  left: 20px;
 }
 
 ul {
-    list-style: disc outside;
-    line-height: 1.6em;
+  list-style: disc outside;
+  line-height: 1.6em;
 }
 
 ul.spaciouslist li {
-    margin-bottom: 1.3em;
+  margin-bottom: 1.3em;
 }
 
 img.resize {
-    width: 100%; /* you can use % */
-    height: auto;
+  width: 100%; /* you can use % */
+  height: auto;
 }
