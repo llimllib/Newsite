@@ -58,7 +58,7 @@ deploy:
 
 # sync the cdn dir to the static bucket on my cdn
 cdn:
-	s3cmd sync --acl-public cdn/ s3://llimllib/static/
+	s3cmd sync --delete-removed --acl-public cdn/ s3://llimllib/static/
 
 # flush the digital ocean CDN
 flush:
