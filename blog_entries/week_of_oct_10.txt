@@ -17,6 +17,8 @@ Links for the Week of October 10
   <li>Russ Cox <a href="https://github.com/golang/go/discussions/56010">considers a big backwards-incompatible change</a> to go, to eliminate the <a href="https://github.com/golang/go/issues/20733">loop variable capture</a> problem.
   <li>I <a href="https://llimllib.github.io/nbastats/teams/">created a diamond chart</a> of NBA team efficiencies and wrote <a href="https://twitter.com/llimllib/status/1580379876112052225">a little twitter thread about it</a>. Hopefully more on this soon.</li>
   <li>I got a new work computer, so I created <a href="https://gist.github.com/llimllib/5f01219954e213ec57ae267008e702e5">a new version of my mac OS X installation script</a>.</li>
+  <li>I <a href="https://twitter.com/llimllib/status/1580736384431972353">added OpenAI whisper</a> support to <a href="https://github.com/llimllib/ytgif">ytgif</a>, and made some Dr. Strangelove and Dr. Frankenstein gifs.
+    <p><img src="https://cdn.billmill.org/static/gifs/frankenstein.gif"></li>
 </ul>
 
 <h2>Music</h2>
