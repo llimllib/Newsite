@@ -57,7 +57,7 @@ deploy:
 	rsync -az --delete -e "ssh -i $$HOME/.ssh/billmill.org.key" --safe-links --exclude '.git' build/ root@billmill.org:/var/www/html/
 
 # sync the cdn dir to the static bucket on my cdn
-cdn:
+cdn: listing
 	s3cmd sync --acl-public cdn/ s3://llimllib/static/
 
 # flush the digital ocean CDN
@@ -66,4 +66,16 @@ flush:
 		$$(doctl compute cdn list --format ID | tail -n1) \
 		--files *
 
-.PHONY: all clean builddir serve prerequisites build deploy cdn flush
+# generate a listing of the files in the gifs directory
+listing:
+	cd cdn/gifs && \
+	tree -H '.' \
+    -L 1 \
+    --noreport \
+    --charset utf-8 \
+    --ignore-case \
+    -I "index.html" \
+    -h -s -D \
+    -o index.html
+
+.PHONY: all clean builddir listing serve prerequisites build deploy cdn flush
