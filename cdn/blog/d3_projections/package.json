@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "d3-array": "^3.1.6",
+    "d3-fetch": "^3.0.1",
+    "d3-geo": "^3.0.1",
+    "d3-scale": "^4.0.2",
+    "d3-scale-chromatic": "^3.0.0",
+    "d3-selection": "^3.0.0",
+    "esbuild": "^0.14.38",
+    "prettier": "^2.6.2",
+    "topojson-client": "^3.1.0"
+  }
+}

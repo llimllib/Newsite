@@ -1,0 +1,20 @@
+- is this the right import?
+
+import {csv} from "d3-fetch";
+
+- Ran:
+
+npm install esbuild d3-fetch
+
+- changed `d3.json` to `json`
+
+esbuild map.js --bundle --outfile=bundle.js
+
+- success!
+
+- let's add the rest of the functions we want:
+
+npm install d3-array d3-fetch d3-geo d3-queue d3-scale d3-scale-chromatic d3-selection topojson-client
+
+TODO: blog about building a source map? otherwise what you get out of the bundle is a bunch of crap you can't use
+  - all you do is add --sourcemap
