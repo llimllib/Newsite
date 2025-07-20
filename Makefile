@@ -39,6 +39,7 @@ build: prerequisites builddir $(TEMPLATES) $(CSS)
 	rsync -az --delete template/static build
 	rsync -az --delete template/favicon.ico build
 	rsync -az --delete template/reassess build
+	rsync -az --delete template/reassess2025 build
 
 # We use the .blog_html file to track when we last rendered any blogs. Any
 # blog entry (*.txt) file newer than this file will get rebuilt into HTML
