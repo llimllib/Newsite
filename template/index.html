@@ -2,9 +2,11 @@
 <html lang="en">
   <head>
     <title>Bill Mill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       body {
-        width: 500px;
+        max-width: 500px;
+        width: 90%;
         font:
           18px Georgia,
           "Times New Roman",
@@ -24,9 +26,6 @@
 
       ul {
         list-style: none;
-        /* the centered box is correctly centered but *feels* a bit off,
-           so shim it over to the right a bit */
-        padding-left: 2.5rem;
         text-align: left;
         width: fit-content;
         margin: auto;
@@ -43,6 +42,12 @@
       .fa-mastodon,
       .fa-bluesky {
         color: black;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding-top: 50px;
+        }
       }
     </style>
     <link
