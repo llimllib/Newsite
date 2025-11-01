@@ -27,6 +27,39 @@
             header_down Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
         }
     }
+
+    # proxy to Digital Ocean Spaces for NBA data with clean URLs
+    #
+    # This works for billmill.org/nba/ , but not for billmill.org/nba
+    handle /nba* {
+        uri strip_prefix /nba
+
+        # Root path gets index.html (handles both empty path and /)
+        @root {
+            path /
+            path ""
+        }
+        rewrite @root /index.html
+
+        # Directory paths get index.html appended
+        @dir {
+            path */
+            not path /
+        }
+        rewrite @dir {path}index.html
+
+        # Clean URLs get .html extension added
+        @noext {
+            not path /
+            not path */
+            not path *.*
+        }
+        rewrite @noext {path}.html
+
+        reverse_proxy https://nba-data.sfo3.cdn.digitaloceanspaces.com {
+            header_up Host nba-data.sfo3.cdn.digitaloceanspaces.com
+        }
+    }
 }
 
 # https://caddyserver.com/docs/quick-starts/reverse-proxy
