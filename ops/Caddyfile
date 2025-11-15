@@ -32,6 +32,10 @@
     #
     # This works for billmill.org/nba/ , but not for billmill.org/nba
     handle /nba* {
+        # Redirect /nba to /nba/ to ensure consistent trailing slash
+        @nba_exact path /nba
+        redir @nba_exact /nba/ permanent
+
         uri strip_prefix /nba
 
         # Root path gets index.html (handles both empty path and /)
