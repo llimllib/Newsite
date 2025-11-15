@@ -29,8 +29,6 @@
     }
 
     # proxy to Digital Ocean Spaces for NBA data with clean URLs
-    #
-    # This works for billmill.org/nba/ , but not for billmill.org/nba
     handle /nba* {
         # Redirect /nba to /nba/ to ensure consistent trailing slash
         @nba_exact path /nba
