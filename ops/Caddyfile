@@ -82,3 +82,28 @@
         header_up Host {upstream_hostport}
     }
 }
+
+# This website is a single index.html rn. I wanted to serve it directly out of
+# the CDN bucket it's in, but that's actually not possible in digital ocean as
+# far as I understand it. So, instead, this server is just redirecting to the
+# CDN bucket as there's no static assets
+#
+# The LLM suggests adding:
+# @static path *.css *.js *.png *.jpg *.jpeg *.gif *.svg *.ico *.woff *.woff2 *.json
+# redir @static https://cdn.btree.space{uri} permanent
+#
+# if we do actually get static assets
+btree.space {
+    rewrite / /index.html
+
+    reverse_proxy https://cdn.btree.space {
+        header_up Host cdn.btree.space
+    }
+
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 10MB
+            roll_keep 10
+        }
+    }
+}
