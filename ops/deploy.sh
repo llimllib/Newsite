@@ -70,8 +70,13 @@ ssh_opts=(-i "$KEY" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5)
 echo "waiting for ssh on $ip"
 until ssh "${ssh_opts[@]}" "root@$ip" true 2>/dev/null; do sleep 5; done
 
-rsync -az -e "ssh ${ssh_opts[*]}" \
-    "$OPS/Caddyfile" "$OPS/server/" "root@$ip:/root/ops/"
+# a fresh box is still running first-boot setup when ssh comes up
+ssh "${ssh_opts[@]}" "root@$ip" cloud-init status --wait
+
+# tar rather than rsync, which Debian's image doesn't have. COPYFILE_DISABLE and
+# the flags keep macOS's tar from adding its metadata
+COPYFILE_DISABLE=1 tar --no-xattrs --no-mac-metadata -C "$OPS" -cf - Caddyfile -C server . |
+    ssh "${ssh_opts[@]}" "root@$ip" 'mkdir -p /root/ops && tar -C /root/ops --no-same-owner -xf -'
 ssh "${ssh_opts[@]}" "root@$ip" bash /root/ops/provision.sh
 
 cat <<EOF

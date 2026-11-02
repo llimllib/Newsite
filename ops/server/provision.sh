@@ -6,6 +6,9 @@ set -euxo pipefail
 OPS=/root/ops
 export DEBIAN_FRONTEND=noninteractive
 
+# apt's daily jobs run soon after boot; wait for their lock instead of failing
+apt-get() { command apt-get -o DPkg::Lock::Timeout=600 "$@"; }
+
 apt-get update
 apt-get -y upgrade
 apt-get install -y \
