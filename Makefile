@@ -70,7 +70,7 @@ flush:
 # generate a listing of the files in the gifs directory
 listing:
 	cd cdn/gifs && \
-	tree -H '.' \
+	tree -H '' \
     -L 1 \
     --noreport \
     --charset utf-8 \
