@@ -104,16 +104,6 @@ journal.beta.billmill.org, journal.billmill.org {
 	}
 }
 
-# reverse proxy to the conduit matrix server
-conduit.billmill.org {
-	reverse_proxy 127.0.0.1:6167
-}
-
-# reverse proxy to gitea
-gitea.billmill.org {
-	reverse_proxy 127.0.0.1:3000
-}
-
 # proxy requests to notes.billmill.org to my CDN
 # * https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
 notes.billmill.org {

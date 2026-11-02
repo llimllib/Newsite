@@ -1,0 +1,20 @@
+[Unit]
+Description=llimllib journal service
+After=network.target
+
+[Service]
+User=journal
+Group=journal
+WorkingDirectory=/srv/journal
+ExecStart=/srv/journal/journal -host 127.0.0.1 -port 11111
+Restart=on-failure
+
+# it only needs to read and write its own directory
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/srv/journal
+
+[Install]
+WantedBy=multi-user.target

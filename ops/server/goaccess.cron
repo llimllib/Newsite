@@ -1,0 +1,2 @@
+# at 1 minute past every hour, write https://billmill.org/static/access.html
+1 * * * * root zcat -f /var/log/caddy/access* | goaccess - --log-format=CADDY -o /var/www/html/static/access.html >>/var/log/goaccess.log 2>&1
