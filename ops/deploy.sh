@@ -8,7 +8,7 @@
 set -euo pipefail
 
 NAME=billmill
-REGION=nyc1
+REGION=nyc3
 SIZE=s-1vcpu-1gb
 IMAGE=debian-13-x64
 KEY=$HOME/.ssh/billmill.org.key
