@@ -1,86 +1,209 @@
-{
-    debug
-}
+# The Caddyfile is an easy way to configure your Caddy web server.
+#
+# Unless the file starts with a global options block, the first
+# uncommented line is always the address of your site.
+#
+# To use your own domain name (with automatic HTTPS), first make
+# sure your domain's A/AAAA DNS records are properly pointed to
+# this machine's public IP, then replace the line below with your
+# domain name.
+beta.billmill.org, billmill.org {
+	root * /var/www/html/
+	file_server
 
-# https://caddyserver.com/docs/caddyfile/concepts#environment-variables
-{$HOST:billmill.org} {
-    root * ../build
-    file_server
+	# These are the github repos I have which have gh-pages branches; I
+	# foolishly used github to host them for a long time under the billmill.org
+	# domain and now I have to redirect them to keep the URLs alive
+	@old_github_url {
+		path_regexp old_github_url ^\/((?:champsleagueviz|bloomfilter-tutorial|roundbracket|solving-sol|ncaa-bracket-randomizer|pymag-trees|fantasypl|ratesoccer|lichesstree|magahat|aiclass|Extractotron|covidgraph).*)
+	}
+	redir @old_github_url https://llimllib.github.io/{http.regexp.old_github_url.1}
 
-    # These are the github repos I have which have gh-pages branches; I
-    # foolishly used github to host them for a long time under the billmill.org
-    # domain and now I have to redirect them to keep the URLs alive
-    @old_github_url {
-        path_regexp old_github_url ^\/((?:champsleagueviz|bloomfilter-tutorial|roundbracket|solving-sol|ncaa-bracket-randomizer|pymag-trees|fantasypl|ratesoccer|lichesstree|magahat|aiclass|Extractotron|covidgraph).*)
-    }
-    redir @old_github_url https://llimllib.github.io/{http.regexp.old_github_url.1}
+	# proxy HMDA api and add CORS
+	handle_path /hmdaproxy/* {
+		reverse_proxy {
+			to https://ffiec.cfpb.gov
+			# if we don't set this, the ELB rejects our request with a 503
+			header_up Host "ffiec.cfpb.gov"
+			header_up -X-Forwarded-For
+			header_up -X-Forwarded-Proto
+			header_down Access-Control-Allow-Origin "*"
+			header_down Access-Control-Allow-Methods "GET,POST"
+			header_down Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+		}
+	}
 
-    handle_path /hmdaproxy/* {
-        reverse_proxy {
-            to https://ffiec.cfpb.gov
-            # if we don't set this, the ELB rejects our request with a 503
-            header_up Host "ffiec.cfpb.gov"
-            header_up -X-Forwarded-For
-            header_up -X-Forwarded-Proto
-            header_down Access-Control-Allow-Origin "*"
-            header_down Access-Control-Allow-Methods "GET,POST"
-            header_down Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
-        }
-    }
+	# proxy github pages to add CORS
+	handle_path /ghproxy/* {
+		reverse_proxy {
+			to https://llimllib.github.io
+			# if we don't set this, the ELB rejects our request with a 503
+			header_up Host "llimllib.github.io"
+			header_up -X-Forwarded-For
+			header_up -X-Forwarded-Proto
+			header_down Access-Control-Allow-Origin "*"
+			header_down Access-Control-Allow-Methods "GET,POST"
+			header_down Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+		}
+	}
 
-    # proxy to Digital Ocean Spaces for NBA data with clean URLs
-    handle /nba* {
-        # Redirect /nba to /nba/ to ensure consistent trailing slash
-        @nba_exact path /nba
-        redir @nba_exact /nba/ permanent
+	# proxy to Digital Ocean Spaces for NBA data with clean URLs
+	handle /nba* {
+		@nba_exact path /nba
+		redir @nba_exact /nba/ permanent
 
-        uri strip_prefix /nba
+		uri strip_prefix /nba
 
-        # Root path gets index.html (handles both empty path and /)
-        @root {
-            path /
-            path ""
-        }
-        rewrite @root /index.html
+		# Root path gets index.html (handles both empty path and /)
+		@root {
+			path /
+			path ""
+		}
+		rewrite @root /index.html
 
-        # Directory paths get index.html appended
-        @dir {
-            path */
-            not path /
-        }
-        rewrite @dir {path}index.html
+		# Directory paths get index.html appended
+		@dir {
+			path */
+			not path /
+		}
+		rewrite @dir {path}index.html
 
-        # Clean URLs get .html extension added
-        @noext {
-            not path /
-            not path */
-            not path *.*
-        }
-        rewrite @noext {path}.html
+		# Clean URLs get .html extension added
+		@noext {
+			not path /
+			not path */
+			not path *.*
+		}
+		rewrite @noext {path}.html
 
-        reverse_proxy https://nba-data.sfo3.cdn.digitaloceanspaces.com {
-            header_up Host nba-data.sfo3.cdn.digitaloceanspaces.com
-        }
-    }
+		reverse_proxy https://nba-data.sfo3.cdn.digitaloceanspaces.com {
+			header_up Host nba-data.sfo3.cdn.digitaloceanspaces.com
+		}
+	}
+
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
 }
 
 # https://caddyserver.com/docs/quick-starts/reverse-proxy
 # To make this a localhost subdomain work in Safari, I had to add
 # `127.0.0.1 journal.localhost` to /etc/hosts
-{$JOURNAL_HOST:journal.billmill.org} {
-    reverse_proxy {$JOURNAL:127.0.0.1:11111}
+journal.beta.billmill.org, journal.billmill.org {
+	reverse_proxy {$JOURNAL:127.0.0.1:11111}
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
 }
 
-{$NOTES_HOST:notes.billmill.org} {
-    # the CDN won't serve index.html at /, so treat it specially
-    rewrite / /obsidian_html/index.html
+# reverse proxy to the conduit matrix server
+conduit.billmill.org {
+	reverse_proxy 127.0.0.1:6167
+}
 
-    # otherwise, just return the file
-    rewrite * /obsidian_html{path}
+# reverse proxy to gitea
+gitea.billmill.org {
+	reverse_proxy 127.0.0.1:3000
+}
 
-    reverse_proxy https://cdn.billmill.org {
-        header_up Host {upstream_hostport}
-    }
+# proxy requests to notes.billmill.org to my CDN
+# * https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
+notes.billmill.org {
+	# the CDN won't serve index.html at /, so treat it specially
+	rewrite / /obsidian_html/index.html
+
+	# otherwise, just prepend the bucket and return the file
+	rewrite * /obsidian_html{path}
+
+	reverse_proxy https://cdn.billmill.org {
+		header_up Host {upstream_hostport}
+	}
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
+}
+
+# proxy requests to comicsofdoom.billmill.org to my CDN
+comicsofdoom.billmill.org {
+	# the CDN won't serve index.html at /, so treat it specially
+	rewrite / /comics_of_doom/index.html
+
+	# otherwise, just prepend the bucket and return the file
+	rewrite * /comics_of_doom{path}
+
+	reverse_proxy https://cdn.billmill.org {
+		header_up Host {upstream_hostport}
+	}
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
+}
+
+# proxy pretest.page to the silly site I set up for Sam
+# * https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
+pretest.page {
+	# the CDN won't serve index.html at /, so treat it specially
+	rewrite / /pretest.page/index.html
+
+	# otherwise, just prepend the bucket and return the file
+	rewrite * /pretest.page{path}
+
+	reverse_proxy https://cdn.billmill.org {
+		header_up Host {upstream_hostport}
+	}
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
+}
+
+# goatcounter server on my local box
+goatcounter.billmill.org {
+	handle {
+		reverse_proxy qfwfq:8080
+	}
+
+	log {
+		output file /var/log/caddy/goatcounter-access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
+}
+
+# immich server on my local box
+immich.billmill.org {
+	handle {
+		reverse_proxy qfwfq:2283
+	}
+
+	log {
+		output file /var/log/caddy/immich-access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
 }
 
 # This website is a single index.html rn. I wanted to serve it directly out of
@@ -94,16 +217,34 @@
 #
 # if we do actually get static assets
 btree.space {
-    rewrite / /index.html
+	rewrite / /index.html
 
-    reverse_proxy https://cdn.btree.space {
-        header_up Host cdn.btree.space
-    }
+	reverse_proxy https://cdn.btree.space {
+		header_up Host cdn.btree.space
+	}
 
-    log {
-        output file /var/log/caddy/access.log {
-            roll_size 10MB
-            roll_keep 10
-        }
-    }
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MB
+			roll_keep 250
+			roll_keep_for 90d
+		}
+	}
 }
+# Default caddyfile folllows:
+# :80
+
+# Set this path to your site's directory.
+# root * /usr/share/caddy
+
+# Enable the static file server.
+# file_server
+
+# Another common task is to set up a reverse proxy:
+# reverse_proxy localhost:8080
+
+# Or serve a PHP site through php-fpm:
+# php_fastcgi localhost:9000
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
