@@ -10,7 +10,8 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get() { command apt-get -o DPkg::Lock::Timeout=600 "$@"; }
 
 apt-get update
-apt-get -y upgrade
+# full-upgrade, because a new kernel is a new package that plain upgrade keeps back
+apt-get -y full-upgrade
 apt-get install -y \
     apt-transport-https \
     curl \
@@ -99,4 +100,8 @@ if [ -d /var/lib/caddy/.local/share/caddy/certificates ]; then
 else
     systemctl disable --now caddy
     echo "no caddy certificates yet; caddy is stopped until ops/migrate.sh runs"
+fi
+
+if [ -f /run/reboot-required ]; then
+    echo "reboot required: $(tr '\n' ' ' </run/reboot-required.pkgs)"
 fi
