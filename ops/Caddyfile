@@ -52,6 +52,21 @@ beta.billmill.org, billmill.org {
 		@nba_exact path /nba
 		redir @nba_exact /nba/ permanent
 
+		# a scraper (Nov 2026) crawling every page through a proxy pool. It
+		# claims a Google referrer on a navigation the browser says has no
+		# source site (Sec-Fetch-Site: none), which no real click sends
+		@scraper {
+			header Sec-Fetch-Site none
+			header Referer https://www.google.com/
+			header_regexp User-Agent "X11; Linux x86_64.*Chrome/158\.0\.0\.0"
+		}
+		respond @scraper 403
+
+		# Meta's AI training crawler: 20k+ page loads a day from Nov 2026.
+		# Link previews (facebookexternalhit) still get through
+		@meta_ai header User-Agent *meta-externalagent*
+		respond @meta_ai 403
+
 		uri strip_prefix /nba
 
 		# Root path gets index.html (handles both empty path and /)
